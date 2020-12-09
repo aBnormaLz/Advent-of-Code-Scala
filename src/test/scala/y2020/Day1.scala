@@ -39,6 +39,32 @@ class Day1 extends AnyWordSpecLike with Matchers {
       .get
   }
 
+  def day1part2(input: Seq[String]): Int = {
+    val numbers = input.map(_.toInt)
+
+    val products: Seq[Option[Int]] = for {
+      a <- numbers.indices
+      b <- (a + 1) until numbers.size
+      c <- (b + 1) until numbers.size
+    } yield {
+      if (numbers(a) + numbers(b) + numbers(c) == 2020) {
+        Some(numbers(a) * numbers(b) * numbers(c))
+      } else {
+        None
+      }
+    }
+
+    val filtered: Seq[Int] = products
+      .filter(_.isDefined)
+      .map(_.get)
+
+    if (filtered.size > 1) {
+      println(s"Filtered size is ${filtered.size} :(")
+    }
+
+    filtered.head
+  }
+
   "Part 1" should {
     "solve the example" in {
       val input = InputReader.getExample(2020, 1)
@@ -50,6 +76,18 @@ class Day1 extends AnyWordSpecLike with Matchers {
       val input = InputReader.getTask(2020, 1)
       day1part1(input) shouldBe 1019904
       day1part1try2(input) shouldBe 1019904
+    }
+  }
+
+  "Part 2" should {
+    "solve the example" in {
+      val input = InputReader.getExample(2020, 1)
+      day1part2(input) shouldBe 241861950
+    }
+
+    "solve the task" in {
+      val input = InputReader.getTask(2020, 1)
+      day1part2(input) shouldBe 176647680
     }
   }
 }
