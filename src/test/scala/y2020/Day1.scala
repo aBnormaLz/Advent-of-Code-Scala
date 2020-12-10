@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import util.{InputReader, Task}
 
 class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
-  def day1part1(input: Seq[String]): Int = {
+  def part1(input: Seq[String]): Int = {
     val numbers = input.map(_.toInt)
 
     val products = for {
@@ -30,7 +30,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
     filtered.head
   }
 
-  def day1part1try2(input: Seq[String]): Int = {
+  def part1try2(input: Seq[String]): Int = {
     input
       .map(_.toInt)
       .combinations(2)
@@ -39,7 +39,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
       .get
   }
 
-  def day1part2(input: Seq[String]): Int = {
+  def part2(input: Seq[String]): Int = {
     val numbers = input.map(_.toInt)
 
     val products: Seq[Option[Int]] = for {
@@ -65,7 +65,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
     filtered.head
   }
 
-  def day1part2try2(input: Seq[String]): Int = {
+  def part2try2(input: Seq[String]): Int = {
     input
       .map(_.toInt)
       .combinations(3)
@@ -77,28 +77,28 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
   "Part 1" should {
     "solve the example" in {
       val input = InputReader.getExample(year, day)
-      day1part1(input) shouldBe 514579
-      day1part1try2(input) shouldBe 514579
+      part1(input) shouldBe 514579
+      part1try2(input) shouldBe 514579
     }
 
     "solve the task" in {
       val input = InputReader.getTask(year, day)
-      day1part1(input) shouldBe 1019904
-      day1part1try2(input) shouldBe 1019904
+      part1(input) shouldBe 1019904
+      part1try2(input) shouldBe 1019904
     }
   }
 
   "Part 2" should {
     "solve the example" in {
       val input = InputReader.getExample(year, day)
-      day1part2(input) shouldBe 241861950
-      day1part2try2(input) shouldBe 241861950
+      part2(input) shouldBe 241861950
+      part2try2(input) shouldBe 241861950
     }
 
     "solve the task" in {
       val input = InputReader.getTask(year, day)
-      day1part2(input) shouldBe 176647680
-      day1part2try2(input) shouldBe 176647680
+      part2(input) shouldBe 176647680
+      part2try2(input) shouldBe 176647680
     }
   }
 }
