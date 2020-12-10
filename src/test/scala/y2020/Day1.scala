@@ -2,9 +2,9 @@ package y2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.InputReader
+import util.{InputReader, Task}
 
-class Day1 extends AnyWordSpecLike with Matchers {
+class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
   def day1part1(input: Seq[String]): Int = {
     val numbers = input.map(_.toInt)
 
@@ -76,13 +76,13 @@ class Day1 extends AnyWordSpecLike with Matchers {
 
   "Part 1" should {
     "solve the example" in {
-      val input = InputReader.getExample(2020, 1)
+      val input = InputReader.getExample(year, day)
       day1part1(input) shouldBe 514579
       day1part1try2(input) shouldBe 514579
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(2020, 1)
+      val input = InputReader.getTask(year, day)
       day1part1(input) shouldBe 1019904
       day1part1try2(input) shouldBe 1019904
     }
@@ -90,13 +90,13 @@ class Day1 extends AnyWordSpecLike with Matchers {
 
   "Part 2" should {
     "solve the example" in {
-      val input = InputReader.getExample(2020, 1)
+      val input = InputReader.getExample(year, day)
       day1part2(input) shouldBe 241861950
       day1part2try2(input) shouldBe 241861950
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(2020, 1)
+      val input = InputReader.getTask(year, day)
       day1part2(input) shouldBe 176647680
       day1part2try2(input) shouldBe 176647680
     }
