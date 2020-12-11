@@ -11,7 +11,7 @@ object InputReader {
     get(year, day, "task")
   }
 
-  def get(year: Int, day: Int, postfix: String): Seq[String] = {
-    Source.fromResource(s"y$year/d${day}_$postfix.txt").getLines.toSeq
+  def get(year: Int, day: Int, prefix: String): Seq[String] = {
+    Source.fromResource(s"y$year/${prefix}_day$day.txt").getLines.toSeq
   }
 }
