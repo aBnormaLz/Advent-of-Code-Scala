@@ -12,6 +12,6 @@ object InputReader {
   }
 
   def get(year: Int, day: Int, prefix: String): Seq[String] = {
-    Source.fromResource(s"y$year/${prefix}_day$day.txt").getLines.toSeq
+    Source.fromResource(s"year$year/${prefix}_day$day.txt").getLines.toSeq
   }
 }

@@ -1,4 +1,4 @@
-package y2020
+package year2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
