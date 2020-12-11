@@ -21,6 +21,17 @@ class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
         0
       }
     }
+
+    def getCorrectnessPart2: Int = {
+      val firstChar  = password(from - 1).toString
+      val secondChar = password(to - 1).toString
+
+      if (firstChar == character ^ secondChar == character) {
+        1
+      } else {
+        0
+      }
+    }
   }
 
   private def toPasswordDescriptor(line: String) = {
@@ -50,6 +61,13 @@ class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
       .sum
   }
 
+  def part2(input: Seq[String]): Int = {
+    input
+      .map(toPasswordDescriptor)
+      .map(_.getCorrectnessPart2)
+      .sum
+  }
+
   "Part 1" should {
     "solve the example" in {
       toPasswordDescriptor("1-3 a: abcde").getCorrectnessPart1 == 1 shouldBe true
@@ -60,6 +78,19 @@ class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
     "solve the task" in {
       val input = InputReader.getTask(year, day)
       part1(input) shouldBe 524
+    }
+  }
+
+  "Part 2" should {
+    "solve the example" in {
+      toPasswordDescriptor("1-3 a: abcde").getCorrectnessPart2 == 1 shouldBe true
+      toPasswordDescriptor("1-3 b: cdefg").getCorrectnessPart2 == 1 shouldBe false
+      toPasswordDescriptor("2-9 c: ccccccccc").getCorrectnessPart2 == 1 shouldBe false
+    }
+
+    "solve the task" in {
+      val input = InputReader.getTask(year, day)
+      part2(input) shouldBe 485
     }
   }
 }
