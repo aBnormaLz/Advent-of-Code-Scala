@@ -1,3 +1,3 @@
 package util
 
-class Task(override val year: Int, val day: Int) extends TaskCollection(year)
+class Task(val year: Int, val day: Int)
