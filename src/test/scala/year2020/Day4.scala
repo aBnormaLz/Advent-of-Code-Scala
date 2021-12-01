@@ -2,7 +2,7 @@ package year2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.{InputReader, Task}
+import util.Task
 
 class Day4 extends Task(2020, 4) with AnyWordSpecLike with Matchers {
   implicit class StringParser(string: String) {
@@ -139,12 +139,12 @@ class Day4 extends Task(2020, 4) with AnyWordSpecLike with Matchers {
           |iyr:2011 ecl:brn hgt:59in""".parseTestToMap(),
       ) shouldBe false
 
-      val input = InputReader.getExample(year, day)
+      val input = getExample()
       part1(input) shouldBe 2
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part1(input) shouldBe 242
     }
   }
@@ -216,7 +216,7 @@ class Day4 extends Task(2020, 4) with AnyWordSpecLike with Matchers {
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part2(input) shouldBe 186
     }
   }

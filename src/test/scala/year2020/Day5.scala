@@ -2,7 +2,7 @@ package year2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.{InputReader, Task}
+import util.Task
 
 import scala.annotation.tailrec
 
@@ -71,7 +71,7 @@ class Day5 extends Task(2020, 5) with AnyWordSpecLike with Matchers {
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part1(input) shouldBe 959
     }
   }

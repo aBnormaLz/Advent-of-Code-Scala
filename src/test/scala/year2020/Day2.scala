@@ -2,7 +2,7 @@ package year2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.{InputReader, Task}
+import util.Task
 
 class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
   case class PasswordDescriptor(
@@ -76,7 +76,7 @@ class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part1(input) shouldBe 524
     }
   }
@@ -89,7 +89,7 @@ class Day2 extends Task(2020, 2) with AnyWordSpecLike with Matchers {
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part2(input) shouldBe 485
     }
   }

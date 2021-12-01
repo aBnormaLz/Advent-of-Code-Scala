@@ -2,7 +2,7 @@ package year2020
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.{InputReader, Task}
+import util.Task
 
 import scala.annotation.tailrec
 
@@ -74,19 +74,19 @@ class Day3 extends Task(2020, 3) with AnyWordSpecLike with Matchers {
 
   "Part 1" should {
     "solve the example" in {
-      val input = InputReader.getExample(year, day)
+      val input = getExample()
       part1(input) shouldBe 7
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part1(input) shouldBe 289
     }
   }
 
   "Part 2" should {
     "solve the example" in {
-      val input = InputReader.getExample(year, day)
+      val input = getExample()
 
       countTrees(input, 1, 1) shouldBe 2
       countTrees(input, 3, 1) shouldBe 7
@@ -106,7 +106,7 @@ class Day3 extends Task(2020, 3) with AnyWordSpecLike with Matchers {
     }
 
     "solve the task" in {
-      val input = InputReader.getTask(year, day)
+      val input = getTask()
       part2(input) shouldBe 5522401584L
       part2recursive(input) shouldBe 5522401584L
     }
