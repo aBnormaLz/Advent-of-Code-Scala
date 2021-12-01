@@ -19,9 +19,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
       }
     }
 
-    val filtered = products
-      .filter(_.isDefined)
-      .map(_.get)
+    val filtered = products.flatten
 
     if (filtered.size > 1) {
       println(s"Filtered size is ${filtered.size} :(")
@@ -42,7 +40,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
   def part2(input: Seq[String]): Int = {
     val numbers = input.map(_.toInt)
 
-    val products: Seq[Option[Int]] = for {
+    val products = for {
       a <- numbers.indices
       b <- (a + 1) until numbers.size
       c <- (b + 1) until numbers.size
@@ -54,9 +52,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
       }
     }
 
-    val filtered: Seq[Int] = products
-      .filter(_.isDefined)
-      .map(_.get)
+    val filtered = products.flatten
 
     if (filtered.size > 1) {
       println(s"Filtered size is ${filtered.size} :(")
