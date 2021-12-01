@@ -21,6 +21,13 @@ class Day1 extends Task(2021, 1) with AnyWordSpecLike with Matchers {
       .count(pair => pair.head < pair(1))
   }
 
+  def part2try2(input: Seq[String]): Int = {
+    input
+      .map(_.toInt)
+      .sliding(4)
+      .count(quadruplet => quadruplet.head < quadruplet(3))
+  }
+
   "Part 1" should {
     "solve the example" in {
       val input = getExample()
@@ -37,11 +44,13 @@ class Day1 extends Task(2021, 1) with AnyWordSpecLike with Matchers {
     "solve the example" in {
       val input = getExample()
       part2(input) shouldBe 5
+      part2try2(input) shouldBe 5
     }
 
     "solve the task" in {
       val input = getTask()
       part2(input) shouldBe 1418
+      part2try2(input) shouldBe 1418
     }
   }
 }
