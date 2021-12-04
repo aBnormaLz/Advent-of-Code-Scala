@@ -109,6 +109,51 @@ object BingoUtil {
     (winningTable, allWinningNumbers(i - 1))
   }
 
+  def findLastWinningTableAndLastNumber(
+      rawTables: Seq[Seq[Seq[Int]]],
+      allWinningNumbers: Seq[Int],
+  )(implicit log: Logger): (BingoTable, Int) = {
+    var i                                 = 1
+    var lastWinningTableFound             = false
+    var lastWinningTable: BingoTable      = null
+    var nonWinningTables: Seq[BingoTable] = rawTables
+      .map(rawTable => BingoTable(rawTable, Seq()))
+
+    while (!lastWinningTableFound) {
+      log.info("====================")
+      val drewNumbers = allWinningNumbers.slice(0, i)
+      log.info(s"Drew numbers: ${drewNumbers.mkString(", ")}")
+      log.newLine()
+      nonWinningTables.foreach(table => {
+        val bingoTable = table.copy(drewNumbers = drewNumbers)
+        log.info(bingoTable.prettyToString())
+      })
+
+      val newNonWinningTables = nonWinningTables
+        .map(table => table.copy(drewNumbers = drewNumbers))
+        .filterNot(_.isWinning())
+
+      if (newNonWinningTables.isEmpty) {
+
+        nonWinningTables match {
+          case Seq(table) =>
+            lastWinningTableFound = true
+            lastWinningTable = table.copy(drewNumbers = drewNumbers)
+            log.info("Last winning table found!!")
+          case Seq(_, _*) =>
+            throw new IllegalStateException("More than one last winning table found!")
+        }
+      } else {
+        i = i + 1
+        log.info("Still checking...")
+      }
+      nonWinningTables = newNonWinningTables
+      log.info("====================")
+    }
+
+    (lastWinningTable, allWinningNumbers(i - 1))
+  }
+
   def isLineWinning(line: Seq[BingoNumber]): Boolean = {
     line.forall(_.isWining)
   }

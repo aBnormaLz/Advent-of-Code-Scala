@@ -16,6 +16,14 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     winningTable.sumOfNotWinningNumbers() * lastDrewNumber
   }
 
+  def part2(input: Seq[String]): Int = {
+    val allWinningNumbers              = input.head.split(",").map(_.toInt)
+    val rawTables                      = BingoUtil.parseBingos(input)
+    val (winningTable, lastDrewNumber) = BingoUtil.findLastWinningTableAndLastNumber(rawTables, allWinningNumbers)
+
+    winningTable.sumOfNotWinningNumbers() * lastDrewNumber
+  }
+
   "Part 1" should {
     "solve the example" in {
       val input = getExample()
@@ -25,6 +33,18 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     "solve the task" in {
       val input = getTask()
       part1(input) shouldBe 65325
+    }
+  }
+
+  "Part 2" should {
+    "solve the example" in {
+      val input = getExample()
+      part2(input) shouldBe 1924
+    }
+
+    "solve the task" in {
+      val input = getTask()
+      part2(input) shouldBe 4624
     }
   }
 }
