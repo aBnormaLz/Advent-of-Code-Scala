@@ -3,21 +3,28 @@ package year2021
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import util.{Printer, Task}
+import year2021.day5.Day5Printer._
 import year2021.day5.Day5Util._
 
 class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
   def part1(input: Seq[String])(implicit printer: Printer): Int = {
-    val dangerousFields: Seq[(Int, Int)] = getDangerousFields(input)
-    val dangerLevels                     = accumulateDangerousFields(dangerousFields)
+    val (xMax, yMax)   = getXY(input)
+    val dangerousLines = getDangerousLines(input)
+
+    printDangerousLines(dangerousLines, xMax, yMax)
+
+    val dangerLevels = accumulateDangerousFields(dangerousLines.flatten)
+
+    printDangerLevels(dangerLevels, xMax, yMax)
 
     dangerLevels
       .count(_._2 > 1)
   }
 
   def part2(input: Seq[String])(implicit printer: Printer): Int = {
-    val (xMax, yMax)                       = getXY(input)
-    val dangerousFields: Seq[(Int, Int)]   = getDangerousFields(input, withDiagonals = true)
-    val dangerLevels: Map[(Int, Int), Int] = accumulateDangerousFields(dangerousFields)
+    val (xMax, yMax)   = getXY(input)
+    val dangerousLines = getDangerousLines(input, withDiagonals = true)
+    val dangerLevels   = accumulateDangerousFields(dangerousLines.flatten)
 
     printDangerLevels(dangerLevels, xMax, yMax)
 

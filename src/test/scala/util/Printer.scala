@@ -1,20 +1,26 @@
 package util
 
 class Printer(printingEnabled: Boolean) {
-  def printLine(): Unit = {
+  def ifEnabled()(callback: => Unit): Unit = {
     if (printingEnabled) {
+      callback
+    }
+  }
+
+  def printLine(): Unit = {
+    ifEnabled() {
       println()
     }
   }
 
   def printLine(str: String): Unit = {
-    if (printingEnabled) {
+    ifEnabled() {
       println(str)
     }
   }
 
   def print(str: String): Unit = {
-    if (printingEnabled) {
+    ifEnabled() {
       print(str)
     }
   }

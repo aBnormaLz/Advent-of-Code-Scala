@@ -21,39 +21,37 @@ object Day5Util {
     (xMax, yMax)
   }
 
-  def getDangerousFields(input: Seq[String], withDiagonals: Boolean = false)(implicit printer: Printer): Seq[(Int, Int)] = {
+  def getDangerousLines(input: Seq[String], withDiagonals: Boolean = false)(implicit printer: Printer): Seq[Seq[(Int, Int)]] = {
     printer.printLine("====================")
-    val ret = input.flatMap(line => {
-      line match {
-        case s"$x1s,$y1s -> $x2s,$y2s" =>
-          printer.printLine(s"Parsing $line")
-          val (x1, x2, y1, y2) = (x1s.toInt, x2s.toInt, y1s.toInt, y2s.toInt)
-          val dangerousFields = {
-            if (x1 == x2 || y1 == y2 || (withDiagonals && (x1 - x2 == y2 - y1 || x1 - x2 == y1 - y2))) {
-              val lengthOfLine = max(abs(x1 - x2) + 1, abs(y1 - y2) + 1)
-              printer.printLine(s"lengthOfLine: $lengthOfLine")
+    val ret = input.map {
+      case line @ s"$x1s,$y1s -> $x2s,$y2s" =>
+        printer.printLine(s"Parsing $line")
+        val (x1, x2, y1, y2) = (x1s.toInt, x2s.toInt, y1s.toInt, y2s.toInt)
+        val dangerousFields = {
+          if (x1 == x2 || y1 == y2 || (withDiagonals && (x1 - x2 == y2 - y1 || x1 - x2 == y1 - y2))) {
+            val lengthOfLine = max(abs(x1 - x2) + 1, abs(y1 - y2) + 1)
+            printer.printLine(s"lengthOfLine: $lengthOfLine")
 
-              for (i <- 0 until lengthOfLine) yield {
-                val x = x1 + signum(x2 - x1) * i
-                val y = y1 + signum(y2 - y1) * i
-                printer.printLine(s"Adding: $x, $y")
-                (x, y)
-              }
-            } else {
-              Seq.empty[(Int, Int)]
+            for (i <- 0 until lengthOfLine) yield {
+              val x = x1 + signum(x2 - x1) * i
+              val y = y1 + signum(y2 - y1) * i
+              printer.printLine(s"Adding: $x, $y")
+              (x, y)
             }
-          }
-          if (dangerousFields.nonEmpty) {
-            printer.printLine(s"Dangerous fields: $dangerousFields")
           } else {
-            printer.printLine("Skipping line...")
+            Seq.empty[(Int, Int)]
           }
-          printer.printLine("--------------------")
-          dangerousFields
-      }
-    })
+        }
+        if (dangerousFields.nonEmpty) {
+          printer.printLine(s"Dangerous fields: $dangerousFields")
+        } else {
+          printer.printLine("Skipping line...")
+        }
+        printer.printLine("--------------------")
+        dangerousFields
+    }
     printer.printLine("====================")
-    ret
+    ret.filter(_.nonEmpty)
   }
 
   def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)])(implicit printer: Printer): Map[(Int, Int), Int] = {
@@ -66,14 +64,5 @@ object Day5Util {
     printer.printLine(s"Accumulated dangers are: $accumulated")
     printer.printLine("====================")
     accumulated
-  }
-
-  def printDangerLevels(dangerLevels: Map[(Int, Int), Int], xMax: Int, yMax: Int)(implicit printer: Printer): Unit = {
-    for (y <- 0 to yMax) yield {
-      val fieldLine = (for (x <- 0 to xMax) yield {
-        dangerLevels.getOrElse((x, y), ".").toString
-      }).mkString
-      printer.printLine(fieldLine)
-    }
   }
 }
