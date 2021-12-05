@@ -1,12 +1,12 @@
 package year2021.day5
 
-import util.Logger
+import util.Printer
 
 import scala.math.max
 
 object Day5Util {
-  def getXY(input: Seq[String])(implicit log: Logger): (Int, Int) = {
-    log.info("====================")
+  def getXY(input: Seq[String])(implicit printer: Printer): (Int, Int) = {
+    printer.printLine("====================")
     val (xMax, yMax) = input
       .foldLeft((0, 0)) {
         case ((xMax, yMax), next) =>
@@ -16,13 +16,13 @@ object Day5Util {
               (max(max(x1, x2), xMax), max(max(y1, y2), yMax))
           }
       }
-    log.info(s"Size of the field is $xMax x $yMax")
-    log.info("====================")
+    printer.printLine(s"Size of the field is $xMax x $yMax")
+    printer.printLine("====================")
     (xMax, yMax)
   }
 
-  def getDangerousFields(input: Seq[String], withDiagonals: Boolean = false)(implicit log: Logger): Seq[(Int, Int)] = {
-    log.info("====================")
+  def getDangerousFields(input: Seq[String], withDiagonals: Boolean = false)(implicit printer: Printer): Seq[(Int, Int)] = {
+    printer.printLine("====================")
     val ret = input.flatMap(line => {
       line match {
         case s"$x1s,$y1s -> $x2s,$y2s" =>
@@ -65,14 +65,14 @@ object Day5Util {
             }
           }
           if (dangerousFields.nonEmpty) {
-            log.info(s"Parsing $line")
-            log.info(s"Dangerous fields: $dangerousFields")
-            log.info("--------------------")
+            printer.printLine(s"Parsing $line")
+            printer.printLine(s"Dangerous fields: $dangerousFields")
+            printer.printLine("--------------------")
           }
           dangerousFields
       }
     })
-    log.info("====================")
+    printer.printLine("====================")
     ret
   }
 
@@ -80,24 +80,24 @@ object Day5Util {
     if (y1 > y2) y2 to y1 else y1 to y2
   }
 
-  def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)])(implicit log: Logger): Map[(Int, Int), Int] = {
-    log.info("====================")
+  def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)])(implicit printer: Printer): Map[(Int, Int), Int] = {
+    printer.printLine("====================")
     val accumulated = dangerousFields
       .groupBy { case (x, y) => (x, y) }
       .view
       .mapValues(_.length)
       .toMap
-    log.info(s"Accumulated dangers are: $accumulated")
-    log.info("====================")
+    printer.printLine(s"Accumulated dangers are: $accumulated")
+    printer.printLine("====================")
     accumulated
   }
 
-  def printDangerLevels(dangerLevels: Map[(Int, Int), Int], xMax: Int, yMax: Int)(implicit log: Logger): Unit = {
+  def printDangerLevels(dangerLevels: Map[(Int, Int), Int], xMax: Int, yMax: Int)(implicit printer: Printer): Unit = {
     for (y <- 0 to yMax) yield {
       val fieldLine = (for (x <- 0 to xMax) yield {
         dangerLevels.getOrElse((x, y), ".").toString
       }).mkString
-      log.info(fieldLine)
+      printer.printLine(fieldLine)
     }
   }
 }

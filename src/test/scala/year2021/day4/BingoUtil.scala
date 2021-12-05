@@ -1,6 +1,6 @@
 package year2021.day4
 
-import util.Logger
+import util.Printer
 
 object BingoUtil {
   case class BingoNumber(number: Int, isWining: Boolean)
@@ -49,10 +49,10 @@ object BingoUtil {
     }
   }
 
-  def parseBingos(input: Seq[String])(implicit log: Logger): Seq[Seq[Seq[Int]]] = {
+  def parseBingos(input: Seq[String])(implicit printer: Printer): Seq[Seq[Seq[Int]]] = {
     val numberOfBingos = (input.length - 1) / 6
-    log.info(s"numberOfBingos: $numberOfBingos")
-    log.newLine()
+    printer.printLine(s"numberOfBingos: $numberOfBingos")
+    printer.printLine()
 
     for (i <- 0 until numberOfBingos) yield {
       val startOfBingo = (i * 6) + 2
@@ -71,19 +71,19 @@ object BingoUtil {
   def findWinningTableAndLastNumber(
       rawTables: Seq[Seq[Seq[Int]]],
       allWinningNumbers: Seq[Int],
-  )(implicit log: Logger): (BingoTable, Int) = {
+  )(implicit printer: Printer): (BingoTable, Int) = {
     var i                        = 1
     var winningTableFound        = false
     var winningTable: BingoTable = null
 
     while (!winningTableFound) {
-      log.info("====================")
+      printer.printLine("====================")
       val drewNumbers = allWinningNumbers.slice(0, i)
-      log.info(s"Drew numbers: ${drewNumbers.mkString(", ")}")
-      log.newLine()
+      printer.printLine(s"Drew numbers: ${drewNumbers.mkString(", ")}")
+      printer.printLine()
       rawTables.foreach(rawTable => {
         val bingoTable = BingoTable(rawTable, drewNumbers)
-        log.info(bingoTable.prettyToString())
+        printer.printLine(bingoTable.prettyToString())
       })
 
       val winningTables = rawTables
@@ -94,16 +94,16 @@ object BingoUtil {
         case Seq(table) =>
           winningTableFound = true
           winningTable = table
-          log.info("Winning table found!!")
-          log.newLine()
-          log.info(winningTable.prettyToString())
+          printer.printLine("Winning table found!!")
+          printer.printLine()
+          printer.printLine(winningTable.prettyToString())
         case Seq(_, _*) =>
           throw new IllegalStateException("More than one winning table found!")
         case _          =>
           i = i + 1
-          log.info("No winning table found...")
+          printer.printLine("No winning table found...")
       }
-      log.info("====================")
+      printer.printLine("====================")
     }
 
     (winningTable, allWinningNumbers(i - 1))
@@ -112,7 +112,7 @@ object BingoUtil {
   def findLastWinningTableAndLastNumber(
       rawTables: Seq[Seq[Seq[Int]]],
       allWinningNumbers: Seq[Int],
-  )(implicit log: Logger): (BingoTable, Int) = {
+  )(implicit printer: Printer): (BingoTable, Int) = {
     var i                                 = 1
     var lastWinningTableFound             = false
     var lastWinningTable: BingoTable      = null
@@ -120,13 +120,13 @@ object BingoUtil {
       .map(rawTable => BingoTable(rawTable, Seq()))
 
     while (!lastWinningTableFound) {
-      log.info("====================")
+      printer.printLine("====================")
       val drewNumbers = allWinningNumbers.slice(0, i)
-      log.info(s"Drew numbers: ${drewNumbers.mkString(", ")}")
-      log.newLine()
+      printer.printLine(s"Drew numbers: ${drewNumbers.mkString(", ")}")
+      printer.printLine()
       nonWinningTables.foreach(table => {
         val bingoTable = table.copy(drewNumbers = drewNumbers)
-        log.info(bingoTable.prettyToString())
+        printer.printLine(bingoTable.prettyToString())
       })
 
       val newNonWinningTables = nonWinningTables
@@ -139,16 +139,16 @@ object BingoUtil {
           case Seq(table) =>
             lastWinningTableFound = true
             lastWinningTable = table.copy(drewNumbers = drewNumbers)
-            log.info("Last winning table found!!")
+            printer.printLine("Last winning table found!!")
           case Seq(_, _*) =>
             throw new IllegalStateException("More than one last winning table found!")
         }
       } else {
         i = i + 1
-        log.info("Still checking...")
+        printer.printLine("Still checking...")
       }
       nonWinningTables = newNonWinningTables
-      log.info("====================")
+      printer.printLine("====================")
     }
 
     (lastWinningTable, allWinningNumbers(i - 1))
