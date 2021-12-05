@@ -2,7 +2,7 @@ package year2021.day5
 
 import util.Printer
 
-import scala.math.max
+import scala.math.{abs, max, signum}
 
 object Day5Util {
   def getXY(input: Seq[String])(implicit printer: Printer): (Int, Int) = {
@@ -26,58 +26,34 @@ object Day5Util {
     val ret = input.flatMap(line => {
       line match {
         case s"$x1s,$y1s -> $x2s,$y2s" =>
+          printer.printLine(s"Parsing $line")
           val (x1, x2, y1, y2) = (x1s.toInt, x2s.toInt, y1s.toInt, y2s.toInt)
           val dangerousFields = {
-            if (x1 == x2) {
-              for (y <- orderedRangeOf(y1, y2)) yield {
-                (x1, y)
-              }
-            } else if (y1 == y2) {
-              for (x <- orderedRangeOf(x1, x2)) yield {
-                (x, y1)
-              }
-            } else if (withDiagonals && x1 - x2 == y2 - y1) {
-              if (x1 < x2) {
-                // 5,5 -> 8,2
-                for (i <- 0 to (x2 - x1)) yield {
-                  (x1 + i, y1 - i)
-                }
-              } else {
-                // 8,0 -> 0,8
-                for (i <- 0 to (x1 - x2)) yield {
-                  (x1 - i, y1 + i)
-                }
-              }
-            } else if (withDiagonals && x1 - x2 == y1 - y2) {
-              if (x1 < x2) {
-                // 0,0 -> 8,8
-                for (i <- 0 to (x2 - x1)) yield {
-                  (x1 + i, y1 + i)
-                }
-              } else {
-                // 6,4 -> 2,0
-                for (i <- 0 to (x1 - x2)) yield {
-                  (x1 - i, y1 - i)
-                }
+            if (x1 == x2 || y1 == y2 || (withDiagonals && (x1 - x2 == y2 - y1 || x1 - x2 == y1 - y2))) {
+              val lengthOfLine = max(abs(x1 - x2) + 1, abs(y1 - y2) + 1)
+              printer.printLine(s"lengthOfLine: $lengthOfLine")
+
+              for (i <- 0 until lengthOfLine) yield {
+                val x = x1 + signum(x2 - x1) * i
+                val y = y1 + signum(y2 - y1) * i
+                printer.printLine(s"Adding: $x, $y")
+                (x, y)
               }
             } else {
               Seq.empty[(Int, Int)]
             }
           }
           if (dangerousFields.nonEmpty) {
-            printer.printLine(s"Parsing $line")
             printer.printLine(s"Dangerous fields: $dangerousFields")
-            printer.printLine("--------------------")
+          } else {
+            printer.printLine("Skipping line...")
           }
+          printer.printLine("--------------------")
           dangerousFields
       }
     })
     printer.printLine("====================")
     ret
-  }
-
-  def orderedRangeOf(y1: Int, y2: Int): Seq[Int] = {
-    if (y1 > y2) y2 to y1 else y1 to y2
   }
 
   def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)])(implicit printer: Printer): Map[(Int, Int), Int] = {
