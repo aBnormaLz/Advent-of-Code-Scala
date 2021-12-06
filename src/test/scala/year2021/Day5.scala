@@ -7,7 +7,9 @@ import util.{Printer, Task}
 import scala.math.{abs, max, signum}
 
 class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
-  def part1(input: Seq[String])(implicit printer: Printer): Int = {
+  var printer: Printer = _
+
+  def part1(input: Seq[String]): Int = {
     val (xMax, yMax)   = getXY(input)
     val dangerousLines = getDangerousLines(input)
 
@@ -21,7 +23,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
       .count(_._2 > 1)
   }
 
-  def part2(input: Seq[String])(implicit printer: Printer): Int = {
+  def part2(input: Seq[String]): Int = {
     val (xMax, yMax)   = getXY(input)
     val dangerousLines = getDangerousLines(input, withDiagonals = true)
     val dangerLevels   = accumulateDangerousFields(dangerousLines.flatten)
@@ -32,7 +34,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
       .count(_._2 > 1)
   }
 
-  def getXY(input: Seq[String])(implicit printer: Printer): (Int, Int) = {
+  def getXY(input: Seq[String]): (Int, Int) = {
     printer.printLine("====================")
     val (xMax, yMax) = input
       .foldLeft((0, 0)) {
@@ -48,7 +50,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
     (xMax, yMax)
   }
 
-  def getDangerousLines(input: Seq[String], withDiagonals: Boolean = false)(implicit printer: Printer): Seq[Seq[(Int, Int)]] = {
+  def getDangerousLines(input: Seq[String], withDiagonals: Boolean = false): Seq[Seq[(Int, Int)]] = {
     printer.printLine("====================")
     val ret = input.map {
       case line @ s"$x1s,$y1s -> $x2s,$y2s" =>
@@ -81,7 +83,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
     ret.filter(_.nonEmpty)
   }
 
-  def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)])(implicit printer: Printer): Map[(Int, Int), Int] = {
+  def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)]): Map[(Int, Int), Int] = {
     printer.printLine("====================")
     val accumulated = dangerousFields
       .groupBy { case (x, y) => (x, y) }
@@ -93,7 +95,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
     accumulated
   }
 
-  def printDangerousLines(dangerousLines: Seq[Seq[(Int, Int)]], xMax: Int, yMax: Int)(implicit printer: Printer): Unit = {
+  def printDangerousLines(dangerousLines: Seq[Seq[(Int, Int)]], xMax: Int, yMax: Int): Unit = {
     printer.ifEnabled() {
       printer.printLine("====================")
       printer.printLine("Dangerous lines are:")
@@ -107,7 +109,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
     }
   }
 
-  def printDangerLevels(dangerLevels: Map[(Int, Int), Int], xMax: Int, yMax: Int)(implicit printer: Printer): Unit = {
+  def printDangerLevels(dangerLevels: Map[(Int, Int), Int], xMax: Int, yMax: Int): Unit = {
     printer.ifEnabled() {
       for (y <- 0 to yMax) yield {
         val fieldLine = (for (x <- 0 to xMax) yield {
@@ -120,14 +122,14 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
 
   "Part 1" should {
     "solve the example" in {
-      implicit val printer: Printer = new Printer(true)
+      printer = new Printer(true)
 
       val input = getExample()
       part1(input) shouldBe 5
     }
 
     "solve the task" in {
-      implicit val printer: Printer = new Printer(false)
+      printer = new Printer(false)
 
       val input = getTask()
       part1(input) shouldBe 3990
@@ -136,14 +138,14 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
 
   "Part 2" should {
     "solve the example" in {
-      implicit val printer: Printer = new Printer(true)
+      printer = new Printer(true)
 
       val input = getExample()
       part2(input) shouldBe 12
     }
 
     "solve the task" in {
-      implicit val printer: Printer = new Printer(false)
+      printer = new Printer(false)
 
       val input = getTask()
       part2(input) shouldBe 21305

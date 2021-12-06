@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import util.{Printer, Task}
 
 class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
-  implicit val printer: Printer = new Printer(true)
+  val printer: Printer = new Printer(true)
 
   def part1(input: Seq[String]): Int = {
     val allWinningNumbers              = input.head.split(",").map(_.toInt)
@@ -76,7 +76,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     }
   }
 
-  def parseBingos(input: Seq[String])(implicit printer: Printer): Seq[Seq[Seq[Int]]] = {
+  def parseBingos(input: Seq[String]): Seq[Seq[Seq[Int]]] = {
     val numberOfBingos = (input.length - 1) / 6
     printer.printLine(s"numberOfBingos: $numberOfBingos")
     printer.printLine()
@@ -95,10 +95,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     }
   }
 
-  def findWinningTableAndLastNumber(
-      rawTables: Seq[Seq[Seq[Int]]],
-      allWinningNumbers: Seq[Int],
-  )(implicit printer: Printer): (BingoTable, Int) = {
+  def findWinningTableAndLastNumber(rawTables: Seq[Seq[Seq[Int]]], allWinningNumbers: Seq[Int]): (BingoTable, Int) = {
     var i                        = 1
     var winningTableFound        = false
     var winningTable: BingoTable = null
@@ -136,10 +133,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     (winningTable, allWinningNumbers(i - 1))
   }
 
-  def findLastWinningTableAndLastNumber(
-      rawTables: Seq[Seq[Seq[Int]]],
-      allWinningNumbers: Seq[Int],
-  )(implicit printer: Printer): (BingoTable, Int) = {
+  def findLastWinningTableAndLastNumber(rawTables: Seq[Seq[Seq[Int]]], allWinningNumbers: Seq[Int]): (BingoTable, Int) = {
     var i                                 = 1
     var lastWinningTableFound             = false
     var lastWinningTable: BingoTable      = null
