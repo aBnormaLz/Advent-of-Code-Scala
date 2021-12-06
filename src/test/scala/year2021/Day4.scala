@@ -2,6 +2,7 @@ package year2021
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+import util.RichString.PadLeftTo
 import util.{Printer, Task}
 
 class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
@@ -36,7 +37,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     def prettyToString(): String = {
       numbers.map { line =>
         line.map { number =>
-          val padded = number.toString.reverse.padTo(2, " ").reverse.mkString("")
+          val padded = number.toString.padLeftTo(2, " ").mkString("")
           if (drewNumbers.contains(number)) {
             val ret = s"($padded)"
             ret
