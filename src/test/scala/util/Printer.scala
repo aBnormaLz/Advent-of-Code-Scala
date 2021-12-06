@@ -9,19 +9,19 @@ class Printer(printingEnabled: Boolean) {
 
   def printLine(): Unit = {
     ifEnabled() {
-      println()
+      scala.Predef.println()
     }
   }
 
   def printLine(str: String): Unit = {
     ifEnabled() {
-      println(str)
+      scala.Predef.println(str)
     }
   }
 
   def print(str: String): Unit = {
     ifEnabled() {
-      print(str)
+     scala.Predef.print(str)
     }
   }
 }
