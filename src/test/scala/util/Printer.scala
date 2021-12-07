@@ -7,6 +7,12 @@ class Printer(printingEnabled: Boolean) {
     }
   }
 
+  def print(str: String): Unit = {
+    ifEnabled() {
+      scala.Predef.print(str)
+    }
+  }
+
   def printLine(): Unit = {
     ifEnabled() {
       scala.Predef.println()
@@ -19,9 +25,19 @@ class Printer(printingEnabled: Boolean) {
     }
   }
 
-  def print(str: String): Unit = {
-    ifEnabled() {
-     scala.Predef.print(str)
-    }
+  def printSoftLine(): Unit = {
+    printLine("--------------------")
+  }
+
+  def printHardLine(): Unit = {
+    printLine("====================")
+  }
+
+  def printTitle(str: String): Unit = {
+    printLine()
+    printLine("=" * (str.length + 8))
+    printLine(s"=== $str ===")
+    printLine("=" * (str.length + 8))
+    printLine()
   }
 }

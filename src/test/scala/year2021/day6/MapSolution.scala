@@ -15,7 +15,7 @@ object MapSolution {
       val sortedActualGen = ListMap(actualGen.toSeq.sortBy(_._1): _*)
 
       printer.printLine(s"initialGen: \n${sortedActualGen.mkString("\n")}")
-      printer.printLine("--------------------")
+      printer.printSoftLine()
     })
 
     simulate(actualGen, daysToSimulate)
@@ -33,7 +33,7 @@ object MapSolution {
           printer.printLine(s"Days remaining: $daysToSimulate")
           printer.printLine()
           printer.printLine(s"nextGen: \n${sortedNextGen.mkString("\n")}")
-          printer.printLine("--------------------")
+          printer.printSoftLine()
         })
         simulate(nextGen, daysToSimulate - 1)
     }

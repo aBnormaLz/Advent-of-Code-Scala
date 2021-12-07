@@ -11,7 +11,7 @@ object SeqSolution {
 
     printerOpt.foreach(printer => {
       printer.printLine(s"initialGen: \n${actualGen.zipWithIndex.map(_.swap).mkString("\n")}\n")
-      printer.printLine("--------------------")
+      printer.printSoftLine()
     })
 
     simulate(actualGen, daysToSimulate)
@@ -27,7 +27,7 @@ object SeqSolution {
           printer.printLine(s"Days remaining: ${daysToSimulate - 1}")
           printer.printLine()
           printer.printLine(s"nextGen: \n${actualGen.zipWithIndex.map(_.swap).mkString("\n")}")
-          printer.printLine("--------------------")
+          printer.printSoftLine()
         })
         simulate(nextGen, daysToSimulate - 1)
     }

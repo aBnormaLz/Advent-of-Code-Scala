@@ -22,24 +22,12 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
     val daysToSimulate         = 80
 
     printer.printLine(s"Initial state: ${initialGen.mkString(",")}")
-    printer.printLine()
-    printer.printLine("====================================")
-    printer.printLine("=== TailRecursiveSolutionWithSeq ===")
-    printer.printLine("====================================")
-    printer.printLine()
+    printer.printTitle("TailRecursiveSolutionWithSeq")
     val tail = TailRecursiveSolutionWithSeq.calculateGenerationSize(initialGen, 0, daysToSimulate)(Some(printer))
     val rec  = RecursiveSolution.calculateGenerationSize(initialGen, daysToSimulate)
-    printer.printLine()
-    printer.printLine("===================")
-    printer.printLine("=== MapSolution ===")
-    printer.printLine("===================")
-    printer.printLine()
+    printer.printTitle("MapSolution")
     val map  = MapSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
-    printer.printLine()
-    printer.printLine("===================")
-    printer.printLine("=== SeqSolution ===")
-    printer.printLine("===================")
-    printer.printLine()
+    printer.printTitle("SeqSolution")
     val seq  = SeqSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
 
     Res(tail, rec, map, -1, seq, -1)
@@ -82,7 +70,7 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
       } else {
         printer.printLine(s"Result is: $seq")
       }
-      printer.printLine("====================")
+      printer.printHardLine()
       res
     }).last
   }

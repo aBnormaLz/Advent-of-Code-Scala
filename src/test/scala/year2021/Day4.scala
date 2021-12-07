@@ -102,7 +102,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
     var winningTable: BingoTable = null
 
     while (!winningTableFound) {
-      printer.printLine("====================")
+      printer.printHardLine()
       val drewNumbers = allWinningNumbers.slice(0, i)
       printer.printLine(s"Drew numbers: ${drewNumbers.mkString(", ")}")
       printer.printLine()
@@ -128,7 +128,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
           i = i + 1
           printer.printLine("No winning table found...")
       }
-      printer.printLine("====================")
+      printer.printHardLine()
     }
 
     (winningTable, allWinningNumbers(i - 1))
@@ -142,7 +142,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
       .map(rawTable => BingoTable(rawTable, Seq()))
 
     while (!lastWinningTableFound) {
-      printer.printLine("====================")
+      printer.printHardLine()
       val drewNumbers = allWinningNumbers.slice(0, i)
       printer.printLine(s"Drew numbers: ${drewNumbers.mkString(", ")}")
       printer.printLine()
@@ -170,7 +170,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
         printer.printLine("Still checking...")
       }
       nonWinningTables = newNonWinningTables
-      printer.printLine("====================")
+      printer.printHardLine()
     }
 
     (lastWinningTable, allWinningNumbers(i - 1))

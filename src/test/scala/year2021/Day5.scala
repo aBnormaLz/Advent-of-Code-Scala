@@ -21,7 +21,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
   }
 
   def getXY(input: Seq[String]): (Int, Int) = {
-    printer.printLine("====================")
+    printer.printHardLine()
     val (xMax, yMax) = input
       .foldLeft((0, 0)) {
         case ((xMax, yMax), next) =>
@@ -32,12 +32,12 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
           }
       }
     printer.printLine(s"Size of the field is $xMax x $yMax")
-    printer.printLine("====================")
+    printer.printHardLine()
     (xMax, yMax)
   }
 
   def getDangerousLines(input: Seq[String], withDiagonals: Boolean = false): Seq[Seq[(Int, Int)]] = {
-    printer.printLine("====================")
+    printer.printHardLine()
     val ret = input.map {
       case line @ s"$x1s,$y1s -> $x2s,$y2s" =>
         printer.printLine(s"Parsing $line")
@@ -64,22 +64,22 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
         } else {
           printer.printLine("Skipping line...")
         }
-        printer.printLine("--------------------")
+        printer.printSoftLine()
         dangerousFields
     }
-    printer.printLine("====================")
+    printer.printHardLine()
     ret.filter(_.nonEmpty)
   }
 
   def accumulateDangerousFields(dangerousFields: Seq[(Int, Int)]): Map[(Int, Int), Int] = {
-    printer.printLine("====================")
+    printer.printHardLine()
     val accumulated = dangerousFields
       .groupBy { case (x, y) => (x, y) }
       .view
       .mapValues(_.length)
       .toMap
     printer.printLine(s"Accumulated dangers are: $accumulated")
-    printer.printLine("====================")
+    printer.printHardLine()
     accumulated
   }
 
