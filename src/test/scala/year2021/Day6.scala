@@ -11,8 +11,8 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
   case class Res(
       tail: Long,
       rec: Long,
-      fast: Long,
-      fastElapsed: Long,
+      map: Long,
+      mapElapsed: Long,
       seq: Long,
       seqElapsed: Long,
   )
@@ -27,22 +27,22 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
     printer.printLine("=== TailRecursiveSolutionWithSeq ===")
     printer.printLine("====================================")
     printer.printLine()
-    val tail = TailRecursiveSolutionWithSeq.calculateGenerationSize(initialGen, 0, daysToSimulate, Some(printer))
+    val tail = TailRecursiveSolutionWithSeq.calculateGenerationSize(initialGen, 0, daysToSimulate)(Some(printer))
     val rec  = RecursiveSolution.calculateGenerationSize(initialGen, daysToSimulate)
     printer.printLine()
-    printer.printLine("=======================")
-    printer.printLine("=== FastMapSolution ===")
-    printer.printLine("=======================")
+    printer.printLine("===================")
+    printer.printLine("=== MapSolution ===")
+    printer.printLine("===================")
     printer.printLine()
-    val fast = FastMapSolution.calculateGenerationSize(initialGen, daysToSimulate, Some(printer))
+    val map  = MapSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
     printer.printLine()
-    printer.printLine("=========================")
-    printer.printLine("=== SimpleSeqSolution ===")
-    printer.printLine("=========================")
+    printer.printLine("===================")
+    printer.printLine("=== SeqSolution ===")
+    printer.printLine("===================")
     printer.printLine()
-    val seq  = SimpleSeqSolution.calculateGenerationSize(initialGen, daysToSimulate, Some(printer))
+    val seq  = SeqSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
 
-    Res(tail, rec, fast, -1, seq, -1)
+    Res(tail, rec, map, -1, seq, -1)
   }
 
   def part2(input: Seq[String]): Res = {
@@ -57,27 +57,27 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 //      )
 //      printElapsedTimeInMillis(tailElapsed, "tail-recursive-with-seq")
 
-      val rec               = -1
+      val rec = -1
 //      val (rec, recElapsed) = ElapsedTimeUtil.measureElapsedTimeInMillis(
 //        RecursiveSolution.calculateGenerationSize(initialGen, daysToSimulate),
 //      )
 //      printElapsedTimeInMillis(recElapsed, "recursive")
 
-      val (fast, fastElapsed) = ElapsedTimeUtil.measureElapsedTimeInNanos(
-        FastMapSolution.calculateGenerationSize(initialGen, daysToSimulate),
+      val (map, mapElapsed) = ElapsedTimeUtil.measureElapsedTimeInNanos(
+        MapSolution.calculateGenerationSize(initialGen, daysToSimulate),
       )
-      printElapsedTimeInNanos(fastElapsed, "fast-map")
+      printElapsedTimeInNanos(mapElapsed, "map")
 
       val (seq, seqElapsed) = ElapsedTimeUtil.measureElapsedTimeInNanos(
-        SimpleSeqSolution.calculateGenerationSize(initialGen, daysToSimulate),
+        SeqSolution.calculateGenerationSize(initialGen, daysToSimulate),
       )
       printElapsedTimeInNanos(seqElapsed, "seq")
 
-      val res = Res(tail, rec, fast, fastElapsed, seq, seqElapsed)
-      if (!(fast == seq)) {
+      val res = Res(tail, rec, map, mapElapsed, seq, seqElapsed)
+      if (!(map == seq)) {
         printer.printLine(s"The results didn't match $res ")
         printer.print(s"rec: ${res.rec}, ")
-        printer.print(s"fast: ${res.fast}, ")
+        printer.print(s"map: ${res.map}, ")
         printer.printLine(s"seq: ${res.seq}")
       } else {
         printer.printLine(s"Result is: $seq")
@@ -104,7 +104,7 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 
       res.tail shouldBe 5934
       res.rec shouldBe 5934
-      res.fast shouldBe 5934
+      res.map shouldBe 5934
       res.seq shouldBe 5934
     }
 
@@ -116,7 +116,7 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 
       res.tail shouldBe 362639
       res.rec shouldBe 362639
-      res.fast shouldBe 362639
+      res.map shouldBe 362639
       res.seq shouldBe 362639
     }
   }
@@ -130,7 +130,7 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 
 //      res.tail shouldBe 26984457539L
 //      res.rec shouldBe 26984457539L
-      res.fast shouldBe 26984457539L
+      res.map shouldBe 26984457539L
       res.seq shouldBe 26984457539L
     }
 
@@ -142,7 +142,7 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 
 //      res.tail shouldBe 1639854996917L
 //      res.rec shouldBe 1639854996917L
-      res.fast shouldBe 1639854996917L
+      res.map shouldBe 1639854996917L
       res.seq shouldBe 1639854996917L
     }
   }

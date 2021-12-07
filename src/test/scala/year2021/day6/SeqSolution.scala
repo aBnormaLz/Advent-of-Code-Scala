@@ -4,8 +4,8 @@ import util.Printer
 
 import scala.annotation.tailrec
 
-object SimpleSeqSolution {
-  def calculateGenerationSize(initialGen: Seq[Int], daysToSimulate: Int, printerOpt: Option[Printer] = None): Long = {
+object SeqSolution {
+  def calculateGenerationSize(initialGen: Seq[Int], daysToSimulate: Int)(implicit printerOpt: Option[Printer] = None): Long = {
     val actualGen = (0 to 8)
       .map(x => initialGen.count(y => y == x).toLong)
 
@@ -14,7 +14,23 @@ object SimpleSeqSolution {
       printer.printLine("--------------------")
     })
 
-    simulateDay(actualGen, daysToSimulate, printerOpt)
+    simulate(actualGen, daysToSimulate)
+  }
+
+  @tailrec
+  def simulate(actualGen: Seq[Long], daysToSimulate: Int)(implicit printerOpt: Option[Printer]): Long = {
+    daysToSimulate match {
+      case 0 => actualGen.sum
+      case _ =>
+        val nextGen = calculateNextGen(actualGen)
+        printerOpt.foreach(printer => {
+          printer.printLine(s"Days remaining: ${daysToSimulate - 1}")
+          printer.printLine()
+          printer.printLine(s"nextGen: \n${actualGen.zipWithIndex.map(_.swap).mkString("\n")}")
+          printer.printLine("--------------------")
+        })
+        simulate(nextGen, daysToSimulate - 1)
+    }
   }
 
   private def calculateNextGen(actualGen: Seq[Long]): Seq[Long] = {
@@ -29,21 +45,5 @@ object SimpleSeqSolution {
       actualGen(8),
       actualGen.head,
     )
-  }
-
-  @tailrec
-  def simulateDay(actualGen: Seq[Long], daysToSimulate: Int, printerOpt: Option[Printer]): Long = {
-    daysToSimulate match {
-      case 0 => actualGen.sum
-      case _ =>
-        val nextGen = calculateNextGen(actualGen)
-        printerOpt.foreach(printer => {
-          printer.printLine(s"Days remaining: ${daysToSimulate - 1}")
-          printer.printLine()
-          printer.printLine(s"nextGen: \n${actualGen.zipWithIndex.map(_.swap).mkString("\n")}")
-          printer.printLine("--------------------")
-        })
-        simulateDay(nextGen, daysToSimulate - 1, printerOpt: Option[Printer])
-    }
   }
 }

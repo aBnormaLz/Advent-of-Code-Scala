@@ -6,12 +6,12 @@ import util.RichString.PadLeftTo
 import scala.annotation.tailrec
 
 object TailRecursiveSolutionWithSeq {
-  def calculateGenerationSize(initialGen: Seq[Int], genNumber: Int, daysToSimulate: Int, printerOpt: Option[Printer] = None): Long = {
-    calculateNextGen(initialGen, genNumber, daysToSimulate, printerOpt).length
+  def calculateGenerationSize(initialGen: Seq[Int], genNumber: Int, daysToSimulate: Int)(implicit printerOpt: Option[Printer] = None): Long = {
+    calculateNextGen(initialGen, genNumber, daysToSimulate).length
   }
 
   @tailrec
-  private def calculateNextGen(spawns: Seq[Int], genNumber: Int, daysToSimulate: Int, printerOpt: Option[Printer]): Seq[Int] = {
+  private def calculateNextGen(spawns: Seq[Int], genNumber: Int, daysToSimulate: Int)(implicit printerOpt: Option[Printer]): Seq[Int] = {
     if (genNumber >= daysToSimulate) {
       spawns
     } else {
@@ -37,7 +37,7 @@ object TailRecursiveSolutionWithSeq {
           }
         printer.printLine(s"After $paddedElapsedDays: ${nextSpawns.mkString(",")}")
       })
-      calculateNextGen(nextSpawns, genNumber + 1, daysToSimulate, printerOpt)
+      calculateNextGen(nextSpawns, genNumber + 1, daysToSimulate)
     }
   }
 }
