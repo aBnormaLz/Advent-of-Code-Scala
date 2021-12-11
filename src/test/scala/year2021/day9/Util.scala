@@ -1,6 +1,7 @@
 package year2021.day9
 
 import cats.implicits._
+import util.Ops.{IntCoordOps, IntCoordValuesOps}
 import util.Printer
 
 object Util {
@@ -9,28 +10,36 @@ object Util {
   type Basin       = Set[Point]
 
   implicit class PointValuesOps(points: PointValues) {
-    def definedAt(point: Point): Boolean = {
-      points.lift(point._1).flatMap(_.lift(point._2)).isDefined
-    }
-
-    def at(point: Point): Int = {
-      points(point._1)(point._2)
-    }
-
     def up(point: Point): Int = {
-      if (definedAt(point.up())) at(point.up()) else 10
+      if (points.isDefinedAt(point.up())) {
+        points.at(point.up())
+      } else {
+        10
+      }
     }
 
     def down(point: Point): Int = {
-      if (definedAt(point.down())) at(point.down()) else 10
+      if (points.isDefinedAt(point.down())) {
+        points.at(point.down())
+      } else {
+        10
+      }
     }
 
     def left(point: Point): Int = {
-      if (definedAt(point.left())) at(point.left()) else 10
+      if (points.isDefinedAt(point.left())) {
+        points.at(point.left())
+      } else {
+        10
+      }
     }
 
     def right(point: Point): Int = {
-      if (definedAt(point.right())) at(point.right()) else 10
+      if (points.isDefinedAt(point.right())) {
+        points.at(point.right())
+      } else {
+        10
+      }
     }
 
     def findLowPoints(): Seq[Point] = {
@@ -51,10 +60,10 @@ object Util {
 
     def neighboursOf(point: Point): Set[Point] = {
       Set(
-        if (definedAt(point.up())) Some(point.up()) else None,
-        if (definedAt(point.down())) Some(point.down()) else None,
-        if (definedAt(point.left())) Some(point.left()) else None,
-        if (definedAt(point.right())) Some(point.right()) else None,
+        if (points.isDefinedAt(point.up())) Some(point.up()) else None,
+        if (points.isDefinedAt(point.down())) Some(point.down()) else None,
+        if (points.isDefinedAt(point.left())) Some(point.left()) else None,
+        if (points.isDefinedAt(point.right())) Some(point.right()) else None,
       ) collect {
         case Some(point) => point
       }
@@ -87,22 +96,6 @@ object Util {
   }
 
   implicit class PointOps(point: Point) {
-    def up(): Point = {
-      point |-| (0, 1)
-    }
-
-    def down(): Point = {
-      point |+| (0, 1)
-    }
-
-    def left(): Point = {
-      point |-| (1, 0)
-    }
-
-    def right(): Point = {
-      point |+| (1, 0)
-    }
-
     def isLow(values: PointValues): Boolean = {
       val value = values.at(point)
 
