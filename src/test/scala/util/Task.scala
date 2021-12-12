@@ -3,6 +3,10 @@ package util
 import scala.io.Source
 
 abstract class Task(val year: Int, val day: Int) {
+  def getExample(specifier: Int): Seq[String] = {
+    get(year, day, "example" + specifier)
+  }
+
   def getExample(): Seq[String] = {
     get(year, day, "example")
   }
@@ -11,7 +15,7 @@ abstract class Task(val year: Int, val day: Int) {
     get(year, day, "task")
   }
 
-  private def get(year: Int, day: Int, prefix: String): Seq[String] = {
-    Source.fromResource(s"year$year/${prefix}_day$day.txt").getLines.toSeq
+  private def get(year: Int, day: Int, specifier: String): Seq[String] = {
+    Source.fromResource(s"year$year/day${day}_$specifier.txt").getLines.toSeq
   }
 }
