@@ -26,18 +26,32 @@ class Printer(printingEnabled: Boolean) {
   }
 
   def printSoftLine(): Unit = {
-    printLine("--------------------")
+    ifEnabled() {
+      printLine("--------------------")
+    }
   }
 
   def printHardLine(): Unit = {
-    printLine("====================")
+    ifEnabled() {
+      printLine("====================")
+    }
   }
 
   def printTitle(str: String): Unit = {
-    printLine()
-    printLine("=" * (str.length + 8))
-    printLine(s"=== $str ===")
-    printLine("=" * (str.length + 8))
-    printLine()
+    ifEnabled() {
+      printLine()
+      printLine("=" * (str.length + 8))
+      printLine(s"=== $str ===")
+      printLine("=" * (str.length + 8))
+      printLine()
+    }
+  }
+
+  def printInfo(infos: (String, String)*): Unit = {
+    ifEnabled() {
+      infos.foreach {
+        case (key, info) => printLine(s"$key$info")
+      }
+    }
   }
 }
