@@ -2,6 +2,7 @@ package year2021
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+import util.Assertion.CheckSize
 import util._
 
 class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
@@ -27,13 +28,6 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
             .toInt
       }
     samplesAndDigitsSeq.sum
-  }
-
-  implicit class CheckSetSize[I <: IterableOnce[_]](seq: I) {
-    def checkSize(requiredSize: Int): I = {
-      assert(seq.iterator.size == requiredSize)
-      seq
-    }
   }
 
   def parseInput(input: Seq[String]): Seq[(Seq[String], Seq[String])] = {
@@ -64,40 +58,40 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
     *    gggg    gggg            gggg    gggg
     */
   def buildDecoder(samples: Seq[Set[Char]]): Map[Set[Char], String] = {
-    val one   = samples.filter(_.size == 2).checkSize(1).head
-    val four  = samples.filter(_.size == 4).checkSize(1).head
-    val seven = samples.filter(_.size == 3).checkSize(1).head
-    val eight = samples.filter(_.size == 7).checkSize(1).head
+    val one   = samples.filter(_.size == 2).checkSizeEquals(1).head
+    val four  = samples.filter(_.size == 4).checkSizeEquals(1).head
+    val seven = samples.filter(_.size == 3).checkSizeEquals(1).head
+    val eight = samples.filter(_.size == 7).checkSizeEquals(1).head
 
-    val TWOorTHREEorFIVE = samples.filter(_.size == 5).toSet.checkSize(3)
-    val ZEROorSIXorNINE  = samples.filter(_.size == 6).toSet.checkSize(3)
+    val TWOorTHREEorFIVE = samples.filter(_.size == 5).toSet.checkSizeEquals(3)
+    val ZEROorSIXorNINE  = samples.filter(_.size == 6).toSet.checkSizeEquals(3)
 
     val nine = ZEROorSIXorNINE
       .filter(number => (number -- four).size == 2)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     val six = ZEROorSIXorNINE
       .filter(number => (number -- seven).size == 4)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     val zero = (ZEROorSIXorNINE - six - nine)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     val three = TWOorTHREEorFIVE
       .filter(number => (number -- one).size == 3)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     val five = TWOorTHREEorFIVE
       .filter(number => (number -- six).isEmpty)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     val two = (TWOorTHREEorFIVE - three - five)
-      .checkSize(1)
+      .checkSizeEquals(1)
       .head
 
     Map(
