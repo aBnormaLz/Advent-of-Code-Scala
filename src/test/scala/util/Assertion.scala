@@ -6,5 +6,10 @@ object Assertion {
       assert(i.iterator.size == size)
       i
     }
+
+    def checkSizeMax(size: Int): I = {
+      assert(i.iterator.size <= size)
+      i
+    }
   }
 }
