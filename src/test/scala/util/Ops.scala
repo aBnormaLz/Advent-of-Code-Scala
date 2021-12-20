@@ -4,11 +4,18 @@ import cats.data.Nested
 import cats.implicits._
 
 import scala.collection.immutable
+import scala.math.{max, min}
 
 object Ops {
   implicit class StringOps(str: String) {
     def padLeftTo[B >: Char](len: Int, elem: B): immutable.IndexedSeq[B] = {
       str.reverse.padTo(len, elem).reverse
+    }
+  }
+
+  implicit class IntOps(int: Int) {
+    def butMax(includingMax: Int): Int = {
+      min(int, includingMax)
     }
   }
 
@@ -19,6 +26,19 @@ object Ops {
     def down(): IntCoord  = coord |+| (0, 1)
     def left(): IntCoord  = coord |-| (1, 0)
     def right(): IntCoord = coord |+| (1, 0)
+  }
+
+  implicit class IntCoordsOps(coords: Seq[IntCoord]) {
+    def getMaxes(): (Int, Int) = {
+      coords
+        .foldLeft((0, 0)) {
+          case ((xMax, yMax), next) =>
+            next match {
+              case (x, y) =>
+                (max(x, xMax), max(y, yMax))
+            }
+        }
+    }
   }
 
   implicit class MatrixOps[T](matrix: Seq[Seq[T]]) {
