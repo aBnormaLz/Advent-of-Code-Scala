@@ -105,14 +105,4 @@ object Util {
       value < values.right(point)
     }
   }
-
-  implicit class ValueOps(int: Int) {
-    def prettyPoint(): String = {
-      if (int > 9) {
-        " "
-      } else {
-        int.toString
-      }
-    }
-  }
 }
