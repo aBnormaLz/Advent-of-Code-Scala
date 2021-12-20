@@ -1,7 +1,7 @@
 package year2021.day6
 
+import util.Ops.StringOps
 import util.Printer
-import util.RichString.PadLeftTo
 
 import scala.annotation.tailrec
 
