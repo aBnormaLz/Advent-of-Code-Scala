@@ -76,5 +76,11 @@ object Ops {
     def innerMap[R](callback: T => R): Seq[Seq[R]] = {
       Nested(matrix).map(callback).value
     }
+
+    def toPrettyString(valueMapper: T => String): String = {
+      matrix.map(
+        _.map(valueMapper).mkString(""),
+      ).mkString("\n")
+    }
   }
 }

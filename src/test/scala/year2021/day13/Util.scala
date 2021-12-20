@@ -26,7 +26,7 @@ object Util {
     def foldLeft(): Paper = {
       val lineNum = dots.head.length / 2
       val newDots = for (y <- dots.indices) yield {
-        val line    = dots(y)
+        val line = dots(y)
         for (x <- 0 until lineNum) yield {
           (line(x) + line(line.length - 1 - x)).butMax(1)
         }
@@ -54,16 +54,13 @@ object Util {
     }
 
     def toPrettyString(): String = {
-      dots
-        .map(line => {
-          line.map(value => {
-            if (value > 0) {
-              "#"
-            } else {
-              "."
-            }
-          }).mkString("")
-        }).mkString("\n")
+      dots.toPrettyString(value => {
+        if (value > 0) {
+          "#"
+        } else {
+          "."
+        }
+      })
     }
   }
 

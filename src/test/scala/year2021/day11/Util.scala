@@ -65,26 +65,18 @@ object Util {
 
     def printEnergies()(implicit printer: Printer): Unit = {
       printer.ifEnabled() {
-        printer.printLine(toPrettyString())
+        printer.printLine(
+          octopiEnergies.toPrettyString(value => {
+            if (value > 9) {
+              "x"
+            } else if (value == 0) {
+              " "
+            } else {
+              value.toString
+            }
+          }),
+        )
       }
-    }
-
-    def toPrettyString(): String = {
-      val xMax = octopiEnergies.size - 1
-      val yMax = octopiEnergies.head.size - 1
-      (for (y <- 0 to yMax) yield {
-        (for (x <- 0 to xMax) yield {
-          val value = octopiEnergies(x)(y)
-          if (value > 9) {
-            "x"
-          } else if (value == 0) {
-            " "
-          } else {
-            value
-          }
-        }).mkString
-
-      }).mkString("\n")
     }
   }
 }
