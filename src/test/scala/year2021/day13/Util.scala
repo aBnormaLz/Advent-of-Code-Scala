@@ -25,12 +25,12 @@ object Util {
 
     def foldLeft(): Paper = {
       val lineNum = dots.head.length / 2
-      val newDots = for (y <- dots.indices) yield {
-        val line = dots(y)
-        for (x <- 0 until lineNum) yield {
-          (line(x) + line(line.length - 1 - x)).butMax(1)
-        }
-      }
+
+      val leftSide          = dots.map(_.slice(0, lineNum))
+      val rightSideReversed = dots.map(line => line.slice(lineNum + 1, line.length).reverse)
+
+      val newDots = (leftSide |+| rightSideReversed)
+        .map(_.map(_.butMax(1)))
 
       Paper(newDots)
     }

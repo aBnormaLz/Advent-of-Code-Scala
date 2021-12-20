@@ -1,5 +1,6 @@
 package util
 
+import cats.Semigroup
 import cats.data.Nested
 import cats.implicits._
 
@@ -41,7 +42,7 @@ object Ops {
     }
   }
 
-  implicit class MatrixOps[T](matrix: Seq[Seq[T]]) {
+  implicit class MatrixOps[T: Semigroup](matrix: Seq[Seq[T]]) {
     def isDefinedAt(coord: IntCoord): Boolean = {
       matrix.lift(coord._1).flatMap(_.lift(coord._2)).isDefined
     }
@@ -63,6 +64,13 @@ object Ops {
         matrix.updated(coord._1, matrix(coord._1).updated(coord._2, value))
       } else {
         matrix
+      }
+    }
+
+    def |+|(right: Seq[Seq[T]]): Seq[Seq[T]] = {
+      matrix.zipWithIndex.map {
+        case (leftLine, i) =>
+          leftLine.zip(right(i)).map { case (x, y) => x |+| y }
       }
     }
 
