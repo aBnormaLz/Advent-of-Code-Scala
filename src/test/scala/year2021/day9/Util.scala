@@ -1,7 +1,7 @@
 package year2021.day9
 
 import cats.implicits._
-import util.Ops.{IntCoordOps, IntCoordValuesOps}
+import util.Ops.{IntCoordOps, MatrixOps}
 import util.Printer
 
 object Util {

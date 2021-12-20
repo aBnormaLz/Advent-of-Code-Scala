@@ -2,7 +2,7 @@ package year2021
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import util.Ops.IntCoordValuesOps
+import util.Ops.MatrixOps
 import util._
 import year2021.day9.Util._
 

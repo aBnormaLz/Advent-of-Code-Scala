@@ -1,6 +1,6 @@
 package year2021.day11
 
-import util.Ops.{IntCoordOps, IntCoordValuesOps}
+import util.Ops.{IntCoordOps, MatrixOps}
 import util.Printer
 
 object Util {
@@ -25,40 +25,22 @@ object Util {
     }
 
     def flash(pos: Pos, flashed: Set[Pos])(implicit printer: Printer): OctopiEnergies = {
-      octopiEnergies.setTo(pos, 0)
-        .increment(pos.up(), flashed)
-        .increment(pos.down(), flashed)
-        .increment(pos.left(), flashed)
-        .increment(pos.right(), flashed)
-        .increment(pos.up().left(), flashed)
-        .increment(pos.up().right(), flashed)
-        .increment(pos.down().left(), flashed)
-        .increment(pos.down().right(), flashed)
+      octopiEnergies.updatedAt(pos, 0)
+        .updatedAt(pos.up(), newValue(pos.up(), _, flashed))
+        .updatedAt(pos.down(), newValue(pos.down(), _, flashed))
+        .updatedAt(pos.left(), newValue(pos.left(), _, flashed))
+        .updatedAt(pos.right(), newValue(pos.right(), _, flashed))
+        .updatedAt(pos.up().left(), newValue(pos.up().left(), _, flashed))
+        .updatedAt(pos.up().right(), newValue(pos.up().right(), _, flashed))
+        .updatedAt(pos.down().left(), newValue(pos.down().left(), _, flashed))
+        .updatedAt(pos.down().right(), newValue(pos.down().right(), _, flashed))
     }
 
-    def setTo(pos: Pos, value: Int): OctopiEnergies = {
-      octopiEnergies
-        .updated(pos._1, octopiEnergies(pos._1).updated(pos._2, value))
-    }
-
-    def increment(pos: Pos, flashed: Set[Pos]): OctopiEnergies = {
-      if (!octopiEnergies.isDefinedAt(pos)) {
-        octopiEnergies
+    def newValue(pos: Pos, previousValue: Int, flashed: Set[Pos]): Int = {
+      if (flashed.contains(pos)) {
+        0
       } else {
-        val previousValue = octopiEnergies.at(pos)
-        val value         =
-          if (flashed.contains(pos)) {
-            0
-          } else {
-            previousValue + 1
-          }
-
-        if (octopiEnergies.isDefinedAt(pos)) {
-          octopiEnergies
-            .updated(pos._1, octopiEnergies(pos._1).updated(pos._2, value))
-        } else {
-          octopiEnergies
-        }
+        previousValue + 1
       }
     }
 

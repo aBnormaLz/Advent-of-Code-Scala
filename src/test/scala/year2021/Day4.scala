@@ -2,11 +2,12 @@ package year2021
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+import util.Ops.MatrixOps
 import util.RichString.PadLeftTo
 import util.{Printer, Task}
 
 class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
-  val printer: Printer = new Printer(true)
+  implicit var printer: Printer = _
 
   def part1(input: Seq[String]): Int = {
     val allWinningNumbers              = input.head.split(",").map(_.toInt)
@@ -34,27 +35,24 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
   import BingoNumber._
 
   case class BingoTable(numbers: Seq[Seq[Int]], drewNumbers: Seq[Int]) {
-    def prettyToString(): String = {
-      numbers.map { line =>
-        line.map { number =>
-          val padded = number.toString.padLeftTo(2, " ").mkString("")
-          if (drewNumbers.contains(number)) {
-            val ret = s"($padded)"
-            ret
-          } else {
-            val ret = s" $padded "
-            ret
-          }
-        }.mkString(" ")
-      }.mkString("\n") + "\n"
+    def print()(implicit printer: Printer): Unit = {
+      numbers.nestedForeach { number =>
+        val padded = number.toString.padLeftTo(2, " ").mkString("")
+        if (drewNumbers.contains(number)) {
+          printer.print(s"($padded)")
+        } else {
+          printer.print(s" $padded ")
+        }
+      } { _ =>
+        printer.printLine()
+      }
+      printer.printLine()
     }
 
     def toWinningTable(): Seq[Seq[BingoNumber]] = {
-      numbers.map { line =>
-        line.map { number =>
-          BingoNumber(number, drewNumbers.contains(number))
-        }
-      }
+      numbers.innerMap(number => {
+        BingoNumber(number, drewNumbers.contains(number))
+      })
     }
 
     def isWinning(): Boolean = {
@@ -108,7 +106,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
       printer.printLine()
       rawTables.foreach(rawTable => {
         val bingoTable = BingoTable(rawTable, drewNumbers)
-        printer.printLine(bingoTable.prettyToString())
+        bingoTable.print()
       })
 
       val winningTables = rawTables
@@ -121,7 +119,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
           winningTable = table
           printer.printLine("Winning table found!!")
           printer.printLine()
-          printer.printLine(winningTable.prettyToString())
+          winningTable.print()
         case Seq(_, _*) =>
           throw new IllegalStateException("More than one winning table found!")
         case _          =>
@@ -142,13 +140,12 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
       .map(rawTable => BingoTable(rawTable, Seq()))
 
     while (!lastWinningTableFound) {
-      printer.printHardLine()
       val drewNumbers = allWinningNumbers.slice(0, i)
       printer.printLine(s"Drew numbers: ${drewNumbers.mkString(", ")}")
       printer.printLine()
       nonWinningTables.foreach(table => {
         val bingoTable = table.copy(drewNumbers = drewNumbers)
-        printer.printLine(bingoTable.prettyToString())
+        bingoTable.print()
       })
 
       val newNonWinningTables = nonWinningTables
@@ -178,11 +175,15 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
 
   "Part 1" should {
     "solve the example" in {
+      printer = new Printer(true)
+
       val input = getExample()
       part1(input) shouldBe 4512
     }
 
     "solve the task" in {
+      printer = new Printer(true)
+
       val input = getTask()
       part1(input) shouldBe 65325
     }
@@ -190,11 +191,15 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
 
   "Part 2" should {
     "solve the example" in {
+      printer = new Printer(true)
+
       val input = getExample()
       part2(input) shouldBe 1924
     }
 
     "solve the task" in {
+      printer = new Printer(true)
+
       val input = getTask()
       part2(input) shouldBe 4624
     }
