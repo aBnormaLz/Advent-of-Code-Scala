@@ -42,7 +42,7 @@ class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
       case line @ s"$x1s,$y1s -> $x2s,$y2s" =>
         printer.printLine(s"Parsing $line")
         val (x1, x2, y1, y2) = (x1s.toInt, x2s.toInt, y1s.toInt, y2s.toInt)
-        val dangerousFields = {
+        val dangerousFields  = {
           val dx = abs(x1 - x2)
           val dy = abs(y1 - y2)
           if (x1 == x2 || y1 == y2 || (withDiagonals && (dx == dy))) {

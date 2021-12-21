@@ -57,7 +57,7 @@ class Day14 extends Task(2021, 14) with AnyWordSpecLike with Matchers {
       .groupBy(_._1)
       .map { case (char, occs) => char -> occs.map(_._2).sum }
 
-    val lastCharOcc         = occsWithoutLastChar.getOrElse(template.last, 0L)
+    val lastCharOcc = occsWithoutLastChar.getOrElse(template.last, 0L)
 
     val occurrences =
       (occsWithoutLastChar + (template.last -> (lastCharOcc + 1L)))

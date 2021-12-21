@@ -8,7 +8,7 @@ object ElapsedTimeUtil {
 
     (result, end - start)
   }
-  def measureElapsedTimeInNanos[T](simulation: => T): (T, Long) = {
+  def measureElapsedTimeInNanos[T](simulation: => T): (T, Long)  = {
     val start  = System.nanoTime()
     val result = simulation
     val end    = System.nanoTime()

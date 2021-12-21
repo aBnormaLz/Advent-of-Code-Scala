@@ -39,6 +39,7 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
     })
   }
 
+  //@formatter:off
   /**   0: (6)  1: (2)  2: (5)  3: (5)  4: (4)
     *    aaaa            aaaa    aaaa
     *   b    c       c       c       c  b    c
@@ -57,6 +58,7 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
     *        f  e    f       f  e    f       f
     *    gggg    gggg            gggg    gggg
     */
+  //@formatter:on
   def buildDecoder(samples: Seq[Set[Char]]): Map[Set[Char], String] = {
     val one   = samples.filter(_.size == 2).checkSizeEquals(1).head
     val four  = samples.filter(_.size == 4).checkSizeEquals(1).head
