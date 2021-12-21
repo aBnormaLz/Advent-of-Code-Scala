@@ -1,5 +1,6 @@
 package year2020
 
+import cats.implicits._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import util.Task
@@ -13,7 +14,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
       b <- (a + 1) until numbers.size
     } yield {
       if (numbers(a) + numbers(b) == 2020) {
-        Some(numbers(a) * numbers(b))
+        (numbers(a) * numbers(b)).some
       } else {
         None
       }
@@ -46,7 +47,7 @@ class Day1 extends Task(2020, 1) with AnyWordSpecLike with Matchers {
       c <- (b + 1) until numbers.size
     } yield {
       if (numbers(a) + numbers(b) + numbers(c) == 2020) {
-        Some(numbers(a) * numbers(b) * numbers(c))
+        (numbers(a) * numbers(b) * numbers(c)).some
       } else {
         None
       }

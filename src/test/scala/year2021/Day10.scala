@@ -1,5 +1,6 @@
 package year2021
 
+import cats.implicits._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import util._
@@ -41,7 +42,7 @@ class Day10 extends Task(2021, 10) with AnyWordSpecLike with Matchers {
     } else {
       remaining.head match {
         case char if closes.contains(char) && !char.closing(openings.last) =>
-          Some(char.toString)
+          char.toString.some
         case char if closes.contains(char) && char.closing(openings.last)  =>
           findFirstError(openings.dropRight(1), remaining.tail)
         case char if opens.contains(char)                                  =>
@@ -78,7 +79,7 @@ class Day10 extends Task(2021, 10) with AnyWordSpecLike with Matchers {
   @tailrec
   final def correctButUnclosed(openings: String, remaining: String): Option[String] = {
     if (remaining.isEmpty) {
-      Some(openings)
+      openings.some
     } else {
       remaining.head match {
         case char if closes.contains(char) && !char.closing(openings.last) =>

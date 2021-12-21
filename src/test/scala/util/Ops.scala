@@ -51,6 +51,14 @@ object Ops {
       matrix(coord._1)(coord._2)
     }
 
+    def atOption(coord: IntCoord): Option[T] = {
+      if (isDefinedAt(coord))
+        matrix(coord._1)(coord._2).some
+      else {
+        None
+      }
+    }
+
     def updatedAt(coord: IntCoord, f: T => T): Seq[Seq[T]] = {
       if (matrix.isDefinedAt(coord)) {
         matrix.updatedAt(coord, f(matrix.at(coord)))

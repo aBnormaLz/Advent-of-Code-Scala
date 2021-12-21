@@ -1,5 +1,6 @@
 package year2021
 
+import cats.implicits._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import util._
@@ -23,12 +24,12 @@ class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
 
     printer.printLine(s"Initial state: ${initialGen.mkString(",")}")
     printer.printTitle("TailRecursiveSolutionWithSeq")
-    val tail = TailRecursiveSolutionWithSeq.calculateGenerationSize(initialGen, 0, daysToSimulate)(Some(printer))
+    val tail = TailRecursiveSolutionWithSeq.calculateGenerationSize(initialGen, 0, daysToSimulate)(printer.some)
     val rec  = RecursiveSolution.calculateGenerationSize(initialGen, daysToSimulate)
     printer.printTitle("MapSolution")
-    val map  = MapSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
+    val map  = MapSolution.calculateGenerationSize(initialGen, daysToSimulate)(printer.some)
     printer.printTitle("SeqSolution")
-    val seq  = SeqSolution.calculateGenerationSize(initialGen, daysToSimulate)(Some(printer))
+    val seq  = SeqSolution.calculateGenerationSize(initialGen, daysToSimulate)(printer.some)
 
     Res(tail, rec, map, -1, seq, -1)
   }

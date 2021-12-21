@@ -48,7 +48,7 @@ object Util {
           line.zipWithIndex.map {
             case (_, y) =>
               if ((x, y).isLow(points)) {
-                Some((x, y))
+                (x, y).some
               } else {
                 None
               }
@@ -60,10 +60,10 @@ object Util {
 
     def neighboursOf(point: Point): Set[Point] = {
       Set(
-        if (points.isDefinedAt(point.up())) Some(point.up()) else None,
-        if (points.isDefinedAt(point.down())) Some(point.down()) else None,
-        if (points.isDefinedAt(point.left())) Some(point.left()) else None,
-        if (points.isDefinedAt(point.right())) Some(point.right()) else None,
+        if (points.isDefinedAt(point.up())) point.up().some else None,
+        if (points.isDefinedAt(point.down())) point.down().some else None,
+        if (points.isDefinedAt(point.left())) point.left().some else None,
+        if (points.isDefinedAt(point.right())) point.right().some else None,
       ) collect {
         case Some(point) => point
       }

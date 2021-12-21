@@ -1,5 +1,6 @@
 package year2021.day11
 
+import cats.implicits._
 import util.Ops.{IntCoordOps, MatrixOps}
 import util.Printer
 
@@ -16,7 +17,7 @@ object Util {
         x <- 0 to xMax
       } yield {
         if (octopiEnergies(x)(y) > 9) {
-          Some(x, y)
+          (x, y).some
         } else {
           None
         }
