@@ -11,17 +11,18 @@ object Util {
     def getFlashPoses(): Set[Pos] = {
       val xMax = octopiEnergies.size - 1
       val yMax = octopiEnergies.head.size - 1
-      (for (y <- 0 to yMax) yield {
-        for (x <- 0 to xMax) yield {
-          if (octopiEnergies(x)(y) > 9) {
-            Some(x, y)
-          } else {
-            None
-          }
+      (for {
+        y <- 0 to yMax
+        x <- 0 to xMax
+      } yield {
+        if (octopiEnergies(x)(y) > 9) {
+          Some(x, y)
+        } else {
+          None
         }
-      }).flatMap(_.collect {
+      }).collect {
         case Some(pos) => pos
-      }).toSet
+      }.toSet
     }
 
     def flash(pos: Pos, flashed: Set[Pos])(implicit printer: Printer): OctopiEnergies = {
@@ -51,16 +52,16 @@ object Util {
     def isSynced(): Boolean = {
       val xMax = octopiEnergies.size - 1
       val yMax = octopiEnergies.head.size - 1
-      (for (y <- 0 to yMax) yield {
-        for (x <- 0 to xMax) yield {
-          if (octopiEnergies(x)(y) == 0) {
-            true
-          } else {
-            false
-          }
+      (for {
+        y <- 0 to yMax
+        x <- 0 to xMax
+      } yield {
+        if (octopiEnergies(x)(y) == 0) {
+          true
+        } else {
+          false
         }
-      }).flatten
-        .forall(_ == true)
+      }).forall(_ == true)
     }
 
     def printEnergies()(implicit printer: Printer): Unit = {
