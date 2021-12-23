@@ -4,13 +4,12 @@ import cats.Semigroup
 import cats.data.Nested
 import cats.implicits._
 
-import scala.collection.immutable
 import scala.math.{max, min}
 
 object Ops {
   implicit class StringOps(str: String) {
-    def padLeftTo[B >: Char](len: Int, elem: B): immutable.IndexedSeq[B] = {
-      str.reverse.padTo(len, elem).reverse
+    def padLeftTo[B >: Char](len: Int, elem: B): String = {
+      str.reverse.padTo(len, elem).reverse.mkString("")
     }
   }
 
