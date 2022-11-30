@@ -22,10 +22,10 @@ object Ops {
   type IntCoord = (Int, Int)
 
   implicit class IntCoordOps(coord: IntCoord) {
-    def up(): IntCoord    = coord |-| (0, 1)
-    def down(): IntCoord  = coord |+| (0, 1)
-    def left(): IntCoord  = coord |-| (1, 0)
-    def right(): IntCoord = coord |+| (1, 0)
+    def up(): IntCoord    = coord |-| (1, 0)
+    def down(): IntCoord  = coord |+| (1, 0)
+    def left(): IntCoord  = coord |-| (0, 1)
+    def right(): IntCoord = coord |+| (0, 1)
   }
 
   implicit class IntCoordsOps(coords: Seq[IntCoord]) {
@@ -96,6 +96,12 @@ object Ops {
       matrix.map(
         _.map(valueMapper).mkString(""),
       ).mkString("\n")
+    }
+
+    def printWithValuesPadded(pad: Int)(implicit printer: Printer): Unit = {
+      printer.printLine(toPrettyString(
+        _.toString.padLeftTo(pad, " "),
+      ))
     }
   }
 }
