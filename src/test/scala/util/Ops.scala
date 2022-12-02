@@ -29,7 +29,7 @@ object Ops {
   }
 
   implicit class IntCoordsOps(coords: Seq[IntCoord]) {
-    def getMaxes(): (Int, Int) = {
+    def getMaxes(): IntCoord = {
       coords
         .foldLeft((0, 0)) {
           case ((xMax, yMax), next) =>
@@ -102,6 +102,22 @@ object Ops {
       printer.printLine(toPrettyString(
         _.toString.padLeftTo(pad, " "),
       ))
+    }
+  }
+
+  implicit class SeqOps[T](seq: Seq[T]) {
+    def split(splitBy: T): Seq[Seq[T]] = {
+      split(_ == splitBy)
+    }
+
+    def split(predicate: T => Boolean): Seq[Seq[T]] = {
+      seq.foldLeft(Seq.empty[Seq[T]])((prev, act) => {
+        act match {
+          case elem if predicate(elem) => prev :+ Seq.empty[T]
+          case elem if prev.isEmpty    => Seq(Seq(elem))
+          case elem                    => prev.init :+ (prev.last :+ elem)
+        }
+      })
     }
   }
 }
