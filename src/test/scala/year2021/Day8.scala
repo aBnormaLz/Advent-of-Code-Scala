@@ -6,8 +6,6 @@ import util.Assertion.CheckSize
 import util._
 
 class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
-  var printer: Printer = _
-
   def part1(input: Seq[String]): Int = {
     val samplesAndDigitsSeq = parseInput(input)
       .map {
@@ -32,9 +30,9 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
 
   def parseInput(input: Seq[String]): Seq[(Seq[String], Seq[String])] = {
     input.map(line => {
-      val split   = line.split(" \\| ")
+      val split = line.split(" \\| ")
       val samples = split.head.split(" ").toSeq
-      val digits  = split.last.split(" ").toSeq
+      val digits = split.last.split(" ").toSeq
       (samples, digits)
     })
   }
@@ -60,13 +58,13 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
     */
   //@formatter:on
   def buildDecoder(samples: Seq[Set[Char]]): Map[Set[Char], String] = {
-    val one   = samples.filter(_.size == 2).checkSizeEquals(1).head
-    val four  = samples.filter(_.size == 4).checkSizeEquals(1).head
+    val one = samples.filter(_.size == 2).checkSizeEquals(1).head
+    val four = samples.filter(_.size == 4).checkSizeEquals(1).head
     val seven = samples.filter(_.size == 3).checkSizeEquals(1).head
     val eight = samples.filter(_.size == 7).checkSizeEquals(1).head
 
     val TWOorTHREEorFIVE = samples.filter(_.size == 5).toSet.checkSizeEquals(3)
-    val ZEROorSIXorNINE  = samples.filter(_.size == 6).toSet.checkSizeEquals(3)
+    val ZEROorSIXorNINE = samples.filter(_.size == 6).toSet.checkSizeEquals(3)
 
     val nine = ZEROorSIXorNINE
       .filter(number => (number -- four).size == 2)
@@ -97,16 +95,16 @@ class Day8 extends Task(2021, 8) with AnyWordSpecLike with Matchers {
       .head
 
     Map(
-      zero  -> "0",
-      one   -> "1",
-      two   -> "2",
+      zero -> "0",
+      one -> "1",
+      two -> "2",
       three -> "3",
-      four  -> "4",
-      five  -> "5",
-      six   -> "6",
+      four -> "4",
+      five -> "5",
+      six -> "6",
       seven -> "7",
       eight -> "8",
-      nine  -> "9",
+      nine -> "9",
     )
   }
 

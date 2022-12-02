@@ -5,8 +5,6 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import util._
 
 class Day7 extends Task(2021, 7) with AnyWordSpecLike with Matchers {
-  var printer: Printer = _
-
   def part1(input: Seq[String]): Int = {
     val positions = input.head.split(",").map(_.toInt)
 

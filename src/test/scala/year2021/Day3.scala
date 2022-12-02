@@ -5,7 +5,6 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import util.Task
 
 import scala.annotation.tailrec
-import scala.math.Ordering
 
 class Day3 extends Task(2021, 3) with AnyWordSpecLike with Matchers {
   def part1(input: Seq[String]): Int = {

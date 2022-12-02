@@ -7,8 +7,6 @@ import util._
 import year2021.day12.Util.{CaveSystem, Connection}
 
 class Day12 extends Task(2021, 12) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   def part1(input: Seq[String]): Set[String] = {
     val caveSystem = CaveSystem(input.map(Connection.apply))
 

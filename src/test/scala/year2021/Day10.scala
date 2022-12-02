@@ -8,10 +8,8 @@ import util._
 import scala.annotation.tailrec
 
 class Day10 extends Task(2021, 10) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
-  val opens  = Seq('(', '[', '{', '<')
-  val closes = Seq(')', ']', '}', '>')
+  val opens: Seq[Char]  = Seq('(', '[', '{', '<')
+  val closes: Seq[Char] = Seq(')', ']', '}', '>')
 
   implicit class CharOps(char: Char) {
     def closing(opening: Char): Boolean = {

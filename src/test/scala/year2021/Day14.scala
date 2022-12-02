@@ -7,8 +7,7 @@ import util._
 import scala.annotation.tailrec
 
 class Day14 extends Task(2021, 14) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-  var stepsToSimulate: Int      = _
+  var stepsToSimulate: Int = _
 
   def part1(input: Seq[String]): Long = {
     val (template, rules) = parseInput(input)

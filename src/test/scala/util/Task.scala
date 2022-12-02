@@ -3,6 +3,8 @@ package util
 import scala.io.Source
 
 abstract class Task(val year: Int, val day: Int) {
+  implicit var printer: Printer = _
+
   def getExample(specifier: Int): Seq[String] = {
     get(year, day, "example" + specifier)
   }

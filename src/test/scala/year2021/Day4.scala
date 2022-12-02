@@ -6,8 +6,6 @@ import util.Ops.{MatrixOps, StringOps}
 import util.{Printer, Task}
 
 class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   def part1(input: Seq[String]): Int = {
     val allWinningNumbers              = input.head.split(",").map(_.toInt)
     val rawTables                      = parseBingos(input)

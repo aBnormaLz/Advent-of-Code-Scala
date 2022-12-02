@@ -6,8 +6,6 @@ import util._
 import year2021.day13.Util._
 
 class Day13 extends Task(2021, 13) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   def solution(input: Seq[String], onlyFirstFold: Boolean = true): Paper = {
     val separatorIndex = input.indexOf("")
     val dotInputs      = input.slice(0, separatorIndex)

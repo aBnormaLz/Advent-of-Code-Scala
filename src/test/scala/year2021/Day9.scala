@@ -9,8 +9,6 @@ import year2021.day9.Util._
 import scala.annotation.tailrec
 
 class Day9 extends Task(2021, 9) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   def part1(input: Seq[String]): Int = {
     val points = input
       .map(_.toList.map(_.asDigit))

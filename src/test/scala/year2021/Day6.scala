@@ -7,8 +7,6 @@ import util._
 import year2021.day6._
 
 class Day6 extends Task(2021, 6) with AnyWordSpecLike with Matchers {
-  var printer: Printer = _
-
   case class Res(
       tail: Long,
       rec: Long,

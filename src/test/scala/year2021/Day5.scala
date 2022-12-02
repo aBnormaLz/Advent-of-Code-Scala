@@ -7,8 +7,6 @@ import util.{Printer, Task}
 import scala.math.{abs, max, signum}
 
 class Day5 extends Task(2021, 5) with AnyWordSpecLike with Matchers {
-  var printer: Printer = _
-
   def solution(input: Seq[String], withDiagonals: Boolean): Int = {
     val (xMax, yMax)   = getXY(input)
     val dangerousLines = getDangerousLines(input, withDiagonals)

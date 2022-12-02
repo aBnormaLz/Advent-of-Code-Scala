@@ -9,8 +9,6 @@ import scala.annotation.tailrec
 import scala.math.min
 
 class Day15 extends Task(2021, 15) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   def part1(input: Seq[String]): Int = {
     val map   = input.map(_.split("").map(_.toInt).toSeq)
     var risks = Seq.fill(map.length)(Seq.fill(map.head.length)(Int.MaxValue))
@@ -86,11 +84,12 @@ class Day15 extends Task(2021, 15) with AnyWordSpecLike with Matchers {
       part1(input) shouldBe 40
     }
 
-    "solve the task" in {
-      printer = new Printer(true)
-
-      val input = getTask()
-      part1(input) shouldBe 415
-    }
+    // 5 min runtime :/
+//    "solve the task" in {
+//      printer = new Printer(true)
+//
+//      val input = getTask()
+//      part1(input) shouldBe 415
+//    }
   }
 }

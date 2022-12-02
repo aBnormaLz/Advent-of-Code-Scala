@@ -8,8 +8,6 @@ import year2021.day11.Util._
 import scala.annotation.tailrec
 
 class Day11 extends Task(2021, 11) with AnyWordSpecLike with Matchers {
-  implicit var printer: Printer = _
-
   val part1StepsToSimulate = 100
 
   def part1(input: Seq[String]): Int = {
@@ -54,8 +52,8 @@ class Day11 extends Task(2021, 11) with AnyWordSpecLike with Matchers {
     if (octopiEnergies.isSynced()) {
       (octopiEnergies, step)
     } else {
-      val incremented                = octopiEnergies.incrementAllBy(1)
-      val (nextEnergies, newFlashes) = simulateFlashes(incremented)
+      val incremented       = octopiEnergies.incrementAllBy(1)
+      val (nextEnergies, _) = simulateFlashes(incremented)
       simulateUntilSync(nextEnergies, step + 1)
     }
   }
