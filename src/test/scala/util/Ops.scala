@@ -8,8 +8,8 @@ import scala.math.{max, min}
 
 object Ops {
   implicit class StringOps(str: String) {
-    def padLeftTo[B >: Char](len: Int, elem: B): String = {
-      str.reverse.padTo(len, elem).reverse.mkString("")
+    def padLeftTo[B >: Char](len: Int, elem: Char): String = {
+      str.reverse.padTo(len, elem).reverse
     }
   }
 
@@ -100,7 +100,7 @@ object Ops {
 
     def printWithValuesPadded(pad: Int)(implicit printer: Printer): Unit = {
       printer.printLine(toPrettyString(
-        _.toString.padLeftTo(pad, " "),
+        _.toString.padLeftTo(pad, ' '),
       ))
     }
   }

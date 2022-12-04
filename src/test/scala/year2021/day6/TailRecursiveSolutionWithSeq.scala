@@ -31,9 +31,9 @@ object TailRecursiveSolutionWithSeq {
       printerOpt.foreach(printer => {
         val paddedElapsedDays =
           if (genNumber == 1) {
-            s"${(genNumber + 1).toString.padLeftTo(2, " ")} day "
+            s"${(genNumber + 1).toString.padLeftTo(2, ' ')} day "
           } else {
-            s"${(genNumber + 1).toString.padLeftTo(2, " ")} days"
+            s"${(genNumber + 1).toString.padLeftTo(2, ' ')} days"
           }
         printer.printLine(s"After $paddedElapsedDays: ${nextSpawns.mkString(",")}")
       })

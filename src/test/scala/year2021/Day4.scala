@@ -34,7 +34,7 @@ class Day4 extends Task(2021, 4) with AnyWordSpecLike with Matchers {
   case class BingoTable(numbers: Seq[Seq[Int]], drewNumbers: Seq[Int]) {
     def print()(implicit printer: Printer): Unit = {
       numbers.nestedForeach { number =>
-        val padded = number.toString.padLeftTo(2, " ")
+        val padded = number.toString.padLeftTo(2, ' ')
         if (drewNumbers.contains(number)) {
           printer.print(s"($padded)")
         } else {
