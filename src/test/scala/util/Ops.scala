@@ -11,6 +11,8 @@ object Ops {
     def padLeftTo[B >: Char](len: Int, elem: Char): String = {
       str.reverse.padTo(len, elem).reverse
     }
+
+    def trimRight: String = str.replaceAll("\\s+$", "")
   }
 
   implicit class IntOps(int: Int) {
