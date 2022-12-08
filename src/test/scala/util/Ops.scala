@@ -3,6 +3,8 @@ package util
 import cats.Semigroup
 import cats.data.Nested
 import cats.implicits._
+import util.enumeration.EmptyElementSettings._
+import util.enumeration.MatchSettings._
 
 import scala.math.{max, min}
 
@@ -107,19 +109,43 @@ object Ops {
     }
   }
 
+  case class SplitSettings(
+      matchSetting: MatchSettings = dropMatch,
+      emptyElementSetting: EmptyElementSettings = dropEmptyElement,
+  )
+
   implicit class SeqOps[T](seq: Seq[T]) {
-    def split(splitBy: T): Seq[Seq[T]] = {
-      split(_ == splitBy)
+    def split(elem: T, splitSettings: SplitSettings = SplitSettings()): Seq[Seq[T]] = {
+      splitBy(_ == elem, splitSettings)
     }
 
-    def split(predicate: T => Boolean): Seq[Seq[T]] = {
-      seq.foldLeft(Seq.empty[Seq[T]])((prev, act) => {
+    def splitBy(predicate: T => Boolean, splitSettings: SplitSettings = SplitSettings()): Seq[Seq[T]] = {
+      val matchSetting        = splitSettings.matchSetting
+      val emptyElementSetting = splitSettings.emptyElementSetting
+
+      val retVal = seq.foldLeft(Seq.empty[Seq[T]])((prev: Seq[Seq[T]], act) => {
         act match {
-          case elem if predicate(elem) => prev :+ Seq.empty[T]
+          case elem if predicate(elem) =>
+            val appendTo = if (prev.isEmpty) Seq(Seq()) else prev
+            matchSetting match {
+              case `dropMatch`      => appendTo :+ Seq()
+              case `keepMatchRight` => appendTo :+ Seq(elem)
+              case `keepMatchLeft`  =>
+                if (prev.isEmpty) {
+                  Seq(Seq(elem), Seq())
+                } else {
+                  appendTo.updated(prev.size - 1, prev.last :+ elem) :+ Seq()
+                }
+            }
           case elem if prev.isEmpty    => Seq(Seq(elem))
           case elem                    => prev.init :+ (prev.last :+ elem)
         }
       })
+
+      emptyElementSetting match {
+        case `keepEmptyElement` => retVal
+        case `dropEmptyElement` => retVal.filter(_.nonEmpty)
+      }
     }
   }
 }
