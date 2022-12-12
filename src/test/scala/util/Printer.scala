@@ -7,7 +7,7 @@ class Printer(printingEnabled: Boolean) {
     }
   }
 
-  def print(str: String): Unit = {
+  def print(str: => String): Unit = {
     ifEnabled() {
       scala.Predef.print(str)
     }
@@ -19,7 +19,7 @@ class Printer(printingEnabled: Boolean) {
     }
   }
 
-  def printLine(str: String): Unit = {
+  def printLine(str: => String): Unit = {
     ifEnabled() {
       scala.Predef.println(str)
     }
