@@ -1,4 +1,4 @@
-name := "Advent of Code"
+name := "Advent of Code Scala"
 
 version := "0.1"
 
