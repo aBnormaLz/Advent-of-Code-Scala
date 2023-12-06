@@ -100,8 +100,24 @@ class Day3 extends Task(2023, 3) with AnyWordSpecLike with Matchers {
       .sum
   }
 
-//  def part2(input: Seq[String]): Int = {
-//  }
+  def part2(input: Seq[String]): Int = {
+    val numberInfos = parseNumberInfos(input)
+
+    val symbols = numberInfos.flatMap(_.adjacentSymbols).toSet
+
+    symbols.flatMap(symbol => {
+      val neighbours = symbol.coordinate.neighbours()
+
+      val numbersNextToCurrent = numberInfos
+        .filter(_.coordinates.intersect(neighbours).nonEmpty)
+
+      if (numbersNextToCurrent.length == 2) {
+        Some(numbersNextToCurrent.map(_.number).product)
+      } else {
+        None
+      }
+    }).sum
+  }
 
   "Part 1" should {
     "solve the example" in {
@@ -119,15 +135,15 @@ class Day3 extends Task(2023, 3) with AnyWordSpecLike with Matchers {
     }
   }
 
-//  "Part 2" should {
-//    "solve the example" in {
-//      val input = getExample()
-//      part2(input) shouldBe 2286
-//    }
-//
-//    "solve the task" in {
-//      val input = getTask()
-//      part2(input) shouldBe 66363
-//    }
-//  }
+  "Part 2" should {
+    "solve the example" in {
+      val input = getExample()
+      part2(input) shouldBe 467835
+    }
+
+    "solve the task" in {
+      val input = getTask()
+      part2(input) shouldBe 87263515
+    }
+  }
 }
