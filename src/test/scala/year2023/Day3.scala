@@ -61,11 +61,9 @@ class Day3 extends Task(2023, 3) with AnyWordSpecLike with Matchers {
     }.flatten
   }
 
-  def part1(input: Seq[String]): Int = {
-    val numberInfos = parseNumberInfos(input)
-
-    for (y <- input.indices) {
-      for (x <- input.head.indices) {
+  def prettyPrint(numberInfos: Seq[NumberInfo], xRange: Range, yRange: Range): Unit = {
+    for (y <- yRange) {
+      for (x <- xRange) {
         val numberToPrint = numberInfos
           .filter(_.coordinates.contains((x, y)))
           .checkSizeMax(1)
@@ -93,6 +91,13 @@ class Day3 extends Task(2023, 3) with AnyWordSpecLike with Matchers {
     }
     printer.printLine()
     printer.printLine()
+
+  }
+
+  def part1(input: Seq[String]): Int = {
+    val numberInfos = parseNumberInfos(input)
+
+    prettyPrint(numberInfos, input.indices, input.head.indices)
 
     numberInfos
       .filter(_.adjacentSymbols.nonEmpty)
