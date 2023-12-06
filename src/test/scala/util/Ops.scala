@@ -30,18 +30,76 @@ object Ops {
     def down(): IntCoord  = coord |+| (1, 0)
     def left(): IntCoord  = coord |-| (0, 1)
     def right(): IntCoord = coord |+| (0, 1)
+
+    def upLeft(): IntCoord    = up().left()
+    def upRight(): IntCoord   = up().right()
+    def downLeft(): IntCoord  = down().left()
+    def downRight(): IntCoord = down().right()
+
+    def neighbours(): Seq[IntCoord] = Seq(
+      up(),
+      down(),
+      left(),
+      right(),
+      upLeft(),
+      upRight(),
+      downLeft(),
+      downRight(),
+    )
+
+    def isIn(min: IntCoord, max: IntCoord): Boolean = {
+      min._1 <= coord._1 && coord._1 <= max._1 &&
+      min._2 <= coord._2 && coord._2 <= max._2
+    }
   }
 
   implicit class IntCoordsOps(coords: Seq[IntCoord]) {
     def getMaxes(): IntCoord = {
       coords
-        .foldLeft((0, 0)) {
+        .foldLeft((Int.MinValue, Int.MinValue)) {
           case ((xMax, yMax), next) =>
             next match {
               case (x, y) =>
                 (max(x, xMax), max(y, yMax))
             }
         }
+    }
+
+    def getMins(): IntCoord = {
+      coords
+        .foldLeft((Int.MaxValue, Int.MaxValue)) {
+          case ((xMin, yMin), next) =>
+            next match {
+              case (x, y) =>
+                (min(x, xMin), min(y, yMin))
+            }
+        }
+    }
+
+    def neighbours(): Set[IntCoord] = {
+      coords.flatMap(_.neighbours()).toSet -- coords
+    }
+
+    def prettySorted(): Seq[IntCoord] = {
+      coords.sortBy(r => (r._1, r._2))
+    }
+
+    def prettyPrint(implicit printer: Printer): Unit = {
+      val maxes = getMaxes()
+      val mins  = getMins()
+
+      for (y <- mins._2 to maxes._2) {
+        for (x <- mins._1 to maxes._1) {
+          if (coords.contains((x, y))) {
+            printer.print(s"($x, $y), ")
+          } else {
+            printer.print(s"        ")
+          }
+        }
+        printer.printLine()
+      }
+      printer.printLine()
+      printer.printLine()
     }
   }
 
